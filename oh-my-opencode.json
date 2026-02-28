@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "hephaestus": { "model": "opencode/trinity-large-preview-free" },
+    "oracle": { "model": "opencode/trinity-large-preview-free" },
+    "librarian": { "model": "opencode/gpt-5-nano" },
+    "explore": { "model": "opencode/gpt-5-nano" },
+    "multimodal-looker": { "model": "opencode/gpt-5-nano" },
+    "prometheus": { "model": "opencode/trinity-large-preview-free" },
+    "metis": { "model": "opencode/trinity-large-preview-free" },
+    "momus": { "model": "opencode/gpt-5-nano" },
+    "atlas": { "model": "opencode/trinity-large-preview-free" }
+  },
+  "categories": {
+    "visual-engineering": { "model": "opencode/trinity-large-preview-free" },
+    "ultrabrain": { "model": "opencode/trinity-large-preview-free" },
+    "deep": { "model": "opencode/trinity-large-preview-free" },
+    "artistry": { "model": "opencode/gpt-5-nano" },
+    "quick": { "model": "opencode/gpt-5-nano" },
+    "unspecified-low": { "model": "opencode/gpt-5-nano" },
+    "unspecified-high": { "model": "opencode/trinity-large-preview-free" },
+    "writing": { "model": "opencode/trinity-large-preview-free" }
+  },
+  "background_task": {
+    "defaultConcurrency": 2
+  },
+  "_note": "临时使用免费模型（配额耗尽）。理想配置：Anthropic Claude + OpenAI GPT",
+  "_test_result": "百炼模型测试：OpenCode 原生不支持 bailian provider，oh-my-opencode 需 OpenAI 兼容模式。不折腾，等配额恢复。"
+}
