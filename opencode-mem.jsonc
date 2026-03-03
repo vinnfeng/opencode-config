@@ -1,0 +1,48 @@
+{
+    "memory": {
+        "enabled": true,
+        "auto_capture": false
+    },
+    "smart_load": {
+        "enabled": true,
+        "threshold_percent": 50,
+        "keywords": {
+            "load": [
+                "继续",
+                "接着",
+                "上次",
+                "之前",
+                "昨天",
+                "刚才"
+            ],
+            "skip": [
+                "新",
+                "临时",
+                "试试",
+                "查询",
+                "简单",
+                "快速"
+            ]
+        }
+    },
+    "token_control": {
+        "levels": {
+            "L1_critical": true,
+            "L2_context": "auto",
+            "L3_logs": false
+        },
+        "max_memories": 5,
+        "use_summary": true
+    },
+    "sqlite": {
+        "path": "~/AppData/Local/opencode-mem/memory.db"
+    },
+    "vector": {
+        "enabled": false
+    },
+    "cleanup": {
+        "session_logs_days": 7,
+        "context_days": 30,
+        "decisions_days": 9999
+    }
+}

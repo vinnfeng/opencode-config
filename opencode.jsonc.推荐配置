@@ -1,0 +1,97 @@
+{
+  "plugin": [
+  ],
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "Mify-Zhipu": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Mify-Zhipu",
+      "options": {
+        "baseURL": "http://model.mify.ai.srv/v1/",
+        "apiKey": "此处替换为在 Mify 平台申请的 key..."
+      },
+      "models": {
+        "zhipuai/glm-4.7": {
+          "name": "zhipuai/glm-4.7"
+        }
+      }
+    },
+    "Mify-OpenAI": {
+      "npm": "@ai-sdk/openai",
+      "name": "Mify-OpenAI",
+      "options": {
+        "baseURL": "http://model.mify.ai.srv/v1/",
+        "apiKey": "此处替换为在 Mify 平台申请的 key..."
+      },
+      "models": {
+        "azure_openai/gpt-5.1-codex": {
+          "name": "azure_openai/gpt-5.1-codex"
+        }
+      }
+    },
+    "Mify-Xiaomi": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Mify-Xiaomi",
+      "options": {
+        "baseURL": "http://model.mify.ai.srv/v1/",
+        "apiKey": "此处替换为在 Mify 平台申请的 key..."
+      },
+      "models": {
+        "xiaomi/mimo-v2-flash": {
+          "name": "xiaomi/mimo-v2-flash"
+        }
+      }
+    },
+    "Mify-Kimi": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Mify-Kimi",
+      "options": {
+        "baseURL": "http://model.mify.ai.srv/v1/",
+        "apiKey": "此处替换为在 Mify 平台申请的 key..."
+      },
+      "models": {
+        "volcengine_maas/kimi-k2-250711": {
+          "name": "volcengine_maas/kimi-k2-250711"
+        },
+        "Pro/moonshotai/Kimi-K2.5": {
+          "name": "Kimi-K2.5",
+          "headers": {
+            "X-Model-Provider-Id": "siliconflow"
+          },
+          "limit": {
+            "context": 260000,
+            "output": 128000
+          },
+          "variants": {
+            "thinking": {
+              "enable_thinking": false
+            }
+          }
+        }
+      }
+    },
+    "Mify-Google": {
+      "npm": "@ai-sdk/google",
+        "options": {
+            "baseURL": "http://model-sgp.mify.ai.srv/gemini",
+            "apiKey": "此处替换为在 Mify 平台申请的 key..."
+        },
+        "models": {
+            "gemini-3-pro-preview-pt": {
+                "name": "gemini-3-pro",
+                "limit": {
+                    "context": 1000000,
+                    "output": 128000
+                }
+            },
+            "gemini-3-flash-preview": {
+                "name": "gemini-3-flash",
+                "limit": {
+                    "context": 1000000,
+                    "output": 128000
+                }
+            }
+       }
+    }
+  }
+}
