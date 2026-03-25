@@ -1,29 +1,82 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "_comment": "三类模型配置：免费 + 百炼 + 公司 Mify（内网）",
+  "_update_time": "2026-03-25 15:20",
+  "_updater": "老三（隐微）",
   "agents": {
-    "hephaestus": { "model": "opencode/trinity-large-preview-free" },
-    "oracle": { "model": "opencode/trinity-large-preview-free" },
-    "librarian": { "model": "opencode/gpt-5-nano" },
-    "explore": { "model": "opencode/gpt-5-nano" },
-    "multimodal-looker": { "model": "opencode/gpt-5-nano" },
-    "prometheus": { "model": "opencode/trinity-large-preview-free" },
-    "metis": { "model": "opencode/trinity-large-preview-free" },
-    "momus": { "model": "opencode/gpt-5-nano" },
-    "atlas": { "model": "opencode/trinity-large-preview-free" }
+    "_sisyphus_note": "代码专家 - 优先 Mify 内网，外网用免费",
+    "sisyphus": {
+      "model": "Mify-OpenAI/azure_openai/gpt-5.3-codex",
+      "_fallback": "opencode/trinity-large-preview-free"
+    },
+    "_librarian_note": "档案管理员 - 优先 Mify 内网",
+    "librarian": {
+      "model": "Mify-OpenAI/azure_openai/gpt-5.3-codex",
+      "_fallback": "opencode/gpt-5-nano"
+    },
+    "_explore_note": "探索者 - 优先 Mify 内网",
+    "explore": {
+      "model": "Mify-OpenAI/azure_openai/gpt-5.3-codex",
+      "_fallback": "opencode/gpt-5-nano"
+    },
+    "_oracle_note": "预言家 - 优先 Mify 最强",
+    "oracle": {
+      "model": "Mify-OpenAI/azure_openai/gpt-5.4-pro",
+      "_fallback": "opencode/trinity-large-preview-free"
+    },
+    "_frontend_note": "前端专家 - 优先 Gemini（多模态）",
+    "frontend-ui-ux-engineer": {
+      "model": "Mify-Google/gemini-3-pro-preview-pt",
+      "_fallback": "opencode/trinity-large-preview-free"
+    },
+    "_document_note": "文档撰写 - 优先小米模型",
+    "document-writer": {
+      "model": "Mify-Xiaomi/xiaomi/mimo-v2-pro",
+      "_fallback": "opencode/gpt-5-nano"
+    },
+    "_multimodal_note": "多模态 - 优先 GPT-5.1",
+    "multimodal-looker": {
+      "model": "Mify-OpenAI/azure_openai/gpt-5.1-codex",
+      "_fallback": "opencode/gpt-5-nano"
+    }
   },
   "categories": {
-    "visual-engineering": { "model": "opencode/trinity-large-preview-free" },
-    "ultrabrain": { "model": "opencode/trinity-large-preview-free" },
-    "deep": { "model": "opencode/trinity-large-preview-free" },
-    "artistry": { "model": "opencode/gpt-5-nano" },
-    "quick": { "model": "opencode/gpt-5-nano" },
-    "unspecified-low": { "model": "opencode/gpt-5-nano" },
-    "unspecified-high": { "model": "opencode/trinity-large-preview-free" },
-    "writing": { "model": "opencode/trinity-large-preview-free" }
+    "_visual_note": "视觉工程 - 优先 Mify",
+    "visual-engineering": {
+      "model": "Mify-Google/gemini-3-pro-preview-pt",
+      "_fallback": "opencode/trinity-large-preview-free"
+    },
+    "_ultrabrain_note": "深度思考 - 优先 Mify",
+    "ultrabrain": {
+      "model": "Mify-OpenAI/azure_openai/gpt-5.4-pro",
+      "_fallback": "opencode/trinity-large-preview-free"
+    },
+    "_deep_note": "复杂任务 - 优先 Mify",
+    "deep": {
+      "model": "Mify-OpenAI/azure_openai/gpt-5.3-codex",
+      "_fallback": "opencode/trinity-large-preview-free"
+    },
+    "_artistry_note": "创意工作 - 优先 Mify",
+    "artistry": {
+      "model": "Mify-Xiaomi/xiaomi/mimo-v2-pro",
+      "_fallback": "opencode/gpt-5-nano"
+    },
+    "_quick_note": "快速任务 - 免费模型",
+    "quick": {
+      "model": "opencode/gpt-5-nano"
+    },
+    "_writing_note": "写作任务 - 优先 Mify",
+    "writing": {
+      "model": "Mify-Kimi/moonshotai/Kimi-K2.5",
+      "_fallback": "opencode/trinity-large-preview-free"
+    }
   },
   "background_task": {
     "defaultConcurrency": 2
   },
-  "_note": "临时使用免费模型（配额耗尽）。理想配置：Anthropic Claude + OpenAI GPT",
-  "_test_result": "百炼模型测试：OpenCode 原生不支持 bailian provider，oh-my-opencode 需 OpenAI 兼容模式。不折腾，等配额恢复。"
+  "_usage_guide": {
+    "内网使用": "自动使用 Mify-* 开头的模型（公司内网）",
+    "外网使用": "自动使用 opencode-* 免费模型或 bailian-* 百炼模型",
+    "模型选择": "oh-my-opencode 会自动选择，无需手动切换"
+  }
 }
