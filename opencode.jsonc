@@ -26,10 +26,19 @@
       },
       "models": {
         "azure_openai/gpt-5.2-codex": {
-          "name": "azure_openai/gpt-5.2-codex"
+          "name": "gpt-5.2-codex"
         },
         "azure_openai/gpt-5.1-codex": {
-          "name": "azure_openai/gpt-5.1-codex"
+          "name": "gpt-5.1-codex"
+        },
+        "azure_openai/gpt-5.4-pro": {
+          "name": "gpt-5.4-pro"
+        },
+        "azure_openai/gpt-5.3-codex": {
+          "name": "gpt-5.3-codex"
+        },
+        "azure_openai/gpt-5.2-chat": {
+          "name": "gpt-5.2-chat"
         }
       }
     },
@@ -43,6 +52,27 @@
       "models": {
         "xiaomi/mimo-v2-flash": {
           "name": "xiaomi/mimo-v2-flash"
+        },
+        "xiaomi/mimo-v2-pro": {
+          "name": "mimo-v2-pro"
+        },
+        "xiaomi/mimo-v2-omni": {
+          "name": "mimo-v2-omni"
+        },
+        "xiaomi/mimo-claw-latest": {
+          "name": "mimo-claw-latest"
+        },
+        "xiaomi/mimo-claw-0307-rl": {
+          "name": "mimo-claw-0307-rl"
+        },
+        "xiaomi/MiMo-VL-7B-RL": {
+          "name": "MiMo-VL-7B-RL"
+        },
+        "xiaomi/MiMo-VL-7B-RL-0808": {
+          "name": "MiMo-VL-7B-RL-0808"
+        },
+        "xiaomi/Mi-BRAG-VL": {
+          "name": "Mi-BRAG-VL"
         }
       }
     },
