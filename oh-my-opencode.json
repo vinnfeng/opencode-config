@@ -3,31 +3,31 @@
   "_comment": "OpenCode SOTA Model Strategy - 2026 Q2 | 主力=Mify(小米内部), 备份=百炼, 策略=智力与视觉最优",
   "categories": {
     "ultrabrain": {
-      "model": "Mify-Claude/ppio/pa/claude-opus-4-6",
+      "model": "Mify-Anthropic/ppio/pa/claude-opus-4-6",
       "fallback_models": ["Mify-OpenAI/azure_openai/gpt-5.4-pro", "bailian/glm-5"]
     },
     "deep": {
-      "model": "Mify-Claude/ppio/pa/claude-sonnet-4-6",
+      "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
       "fallback_models": ["Mify-OpenAI/azure_openai/gpt-5.4", "bailian/qwen3.5-plus"]
     },
     "visual-engineering": {
       "model": "Mify-Google/gemini-3.1-pro-preview",
-      "fallback_models": ["Mify-Claude/ppio/pa/claude-sonnet-4-6", "Mify-Google/gemini-3-flash-preview"]
+      "fallback_models": ["Mify-Anthropic/ppio/pa/claude-sonnet-4-6", "Mify-Google/gemini-3-flash-preview"]
     },
     "quick": {
-      "model": "Mify-Claude/ppio/pa/claude-haiku-4-5-20251001",
+      "model": "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
       "fallback_models": ["bailian/qwen3.5-plus", "opencode/gpt-5-nano"]
     },
     "writing": {
-      "model": "Mify-Claude/ppio/pa/claude-sonnet-4-6",
-      "fallback_models": ["bailian/kimi-k2.5", "opencode/gpt-5-chat"]
+      "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
+      "fallback_models": ["bailian/qwen3.5-plus", "opencode/gpt-5-chat"]
     },
     "unspecified-high": {
       "model": "Mify-OpenAI/azure_openai/gpt-5.4-pro",
-      "fallback_models": ["Mify-Claude/ppio/pa/claude-sonnet-4-6"]
+      "fallback_models": ["Mify-Anthropic/ppio/pa/claude-sonnet-4-6"]
     },
     "unspecified-low": {
-      "model": "Mify-Claude/ppio/pa/claude-haiku-4-5-20251001",
+      "model": "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
       "fallback_models": ["bailian/qwen3.5-plus"]
     }
   },
