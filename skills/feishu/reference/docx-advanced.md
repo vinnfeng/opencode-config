@@ -94,14 +94,18 @@ feishu docx merge-table-cells   <doc_token> <table_block_id> \
 
 ---
 
-## 上传图片 / 文件
+## 上传图片 / 文件 / 视频
 
 ```bash
 feishu docx upload-image <doc_token> --url "https://example.com/image.png"
 feishu docx upload-image <doc_token> --file /path/to/image.png
 feishu docx upload-file  <doc_token> --url "https://example.com/report.pdf"
 feishu docx upload-file  <doc_token> --file /path/to/report.pdf --filename "Q1-report.pdf"
+feishu docx upload-video <doc_token> --file /path/to/demo.mp4
+feishu docx upload-video <doc_token> --url "https://example.com/demo.mp4" --filename "产品演示.mp4"
 ```
+
+`upload-video` 会创建展开的视频卡片（View 块 view_type:2），飞书客户端自动渲染为视频播放器。
 
 ---
 

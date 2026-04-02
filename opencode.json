@@ -3,12 +3,13 @@
   "mcp": {
     "pencil": {
       "command": [
-        "c:\\Users\\Mi\\.vscode\\extensions\\highagency.pencildev-0.6.30\\out\\mcp-server-windows-x64.exe",
+        "C:\\Users\\Mi\\.vscode\\extensions\\highagency.pencildev-0.6.36\\out\\mcp-server-windows-x64.exe",
         "--app",
         "visual_studio_code"
       ],
       "enabled": true,
       "type": "local"
     }
-  }
+  },
+  "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6"
 }

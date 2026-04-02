@@ -103,9 +103,9 @@ print("Hello")
 
 ### 文字颜色
 
-`<text color="red">红色</text>` `<text background-color="yellow">黄色背景</text>`
+`<text color="red">红色</text>` 或 `<font color="red">红色</font>` `<text background-color="yellow">黄色背景</text>`
 
-支持: red, orange, yellow, green, blue, purple, gray
+支持: red, orange, yellow, green, blue, purple, gray。`<font>` 是 `<text>` 的别名，两者等效。
 
 ### 链接
 
@@ -298,6 +298,19 @@ print("Hello")
 
 **⚠️ 重要**: 不支持直接使用 `token` 属性（如 `<file token="xxx"/>`）
 
+### 视频
+
+```html
+<video file="/path/to/demo.mp4" name="产品演示"/>
+<video url="https://example.com/demo.mp4"/>
+```
+
+**属性**:
+- file (本地文件路径) 或 url (远程 URL)，二选一，必需
+- name (显示名，可选；若无扩展名会自动从原始文件名补上)
+
+系统自动上传并插入展开的视频卡片（View 块 view_type:2）。支持 mp4、mov 等飞书支持的视频格式。
+
 ### 画板（Mermaid / PlantUML 图表）
 
 支持两种图表语法：Mermaid 和 PlantUML。
@@ -366,14 +379,22 @@ Bob --> Alice: Hi!
 ### 内嵌网页（Iframe）
 
 ```html
-<iframe url="https://example.com/survey?id=123" type="12"/>
+<!-- 自动识别：直接粘贴页面 URL，系统自动转换为嵌入链接并推导 type -->
+<iframe url="https://www.bilibili.com/video/BV1GJ411x7h7"/>
+<iframe url="https://www.ixigua.com/7349488795498701312"/>
+<iframe url="https://v.youku.com/v_show/id_XNTg1MzQ0OTYwMA==.html"/>
+<iframe url="https://www.figma.com/design/abc123/MyFile"/>
+<iframe url="https://codepen.io/user/pen/abcDEF"/>
+
+<!-- 手动指定 type 时跳过自动识别，URL 原样使用 -->
+<iframe url="https://player.bilibili.com/player.html?bvid=BV1GJ411x7h7&page=1" type="1"/>
 ```
 
-**属性**: url (必需), type (组件类型数字, 必需)
+**属性**: url (必需), type (组件类型数字, 可选——省略时自动从 URL 推导)
 
-**type 枚举**: 1=Bilibili, 2=西瓜, 3=优酷, 4=Airtable, 5=百度地图, 6=高德地图, 8=Figma, 9=墨刀, 10=Canva, 11=CodePen, 12=飞书问卷, 13=金数据
+**自动识别的平台**: Bilibili（bilibili.com）、西瓜视频（ixigua.com）、优酷（v.youku.com）、Figma（figma.com）、CodePen（codepen.io）。不匹配时 URL 原样使用。
 
-**重要提示**: 仅支持上述列出的网页类型。对于普通网页链接，请使用 Markdown 链接格式 `[链接文字](URL)` 代替。
+**type 枚举**: 1=Bilibili, 2=西瓜, 3=优酷, 4=Airtable, 5=百度地图, 6=高德地图, 8=Figma, 9=墨刀, 10=Canva, 11=CodePen, 12=飞书问卷, 13=金数据, 99=Other
 
 ### 引用容器（QuoteContainer）
 

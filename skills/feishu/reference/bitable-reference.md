@@ -487,3 +487,91 @@ feishu bitable create-record appXXX tblXXX \
 | 单元格附件数 | 100 |
 | 单元格人员数 | 1,000 |
 | 单次上传附件大小 | 20 MB |
+
+---
+
+## 字段创建变体（create-field / batch-create-fields）
+
+```bash
+# 普通文本字段
+feishu bitable create-field <app_token> <table_id> --name "备注" --type 1
+
+# 数字字段（type=2）
+# formatter 合法值："0"=整数 "0.0"=一位小数 "0.00"=两位小数 "0,000"=千分位 "0.00%"=百分比
+feishu bitable create-field <app_token> <table_id> --name "数量" --type 2 \
+  --property '{"formatter":"0,000"}'
+
+# 数字变体：进度条（--ui-type Progress）
+feishu bitable create-field <app_token> <table_id> --name "完成度" --type 2 \
+  --ui-type Progress --property '{"formatter":"0"}'
+
+# 数字变体：货币
+feishu bitable create-field <app_token> <table_id> --name "预算" --type 2 \
+  --ui-type Currency --property '{"currency_code":"CNY","formatter":"0,000.00"}'
+
+# 数字变体：评分
+feishu bitable create-field <app_token> <table_id> --name "满意度" --type 2 \
+  --ui-type Rating --property '{"min":1,"max":5,"rating":{"symbol":"star"}}'
+
+# 批量创建字段（从文件读取时 --fields 与 -f 互斥）
+feishu bitable batch-create-fields <app_token> <table_id> \
+  --fields '[{"field_name":"状态","type":3,"property":{"options":[{"name":"进行中"}]}},{"field_name":"负责人","type":11}]'
+feishu bitable batch-create-fields <app_token> <table_id> -f fields.json
+```
+
+---
+
+## 批量表管理
+
+```bash
+feishu bitable batch-create-tables <app_token> --tables '[{"name":"T1"},{"name":"T2"}]'
+feishu bitable batch-create-tables <app_token> -f tables.json
+feishu bitable batch-delete-tables <app_token> tblA,tblB
+```
+
+---
+
+## 仪表盘
+
+```bash
+feishu bitable dashboard list <app_token>
+feishu bitable dashboard copy <app_token> <block_id> [--name "副本"]
+```
+
+---
+
+## 角色权限
+
+```bash
+feishu bitable role create <app_token> --name "编辑者" [--table-perm <json>]
+feishu bitable role list <app_token>
+feishu bitable role update <app_token> <role_id> [--name "新名"] [--table-perm <json>]
+feishu bitable role delete <app_token> <role_id>
+feishu bitable role members <app_token> <role_id>
+feishu bitable role add-member <app_token> <role_id> --member-id ou_xxx
+feishu bitable role remove-member <app_token> <role_id> ou_xxx
+```
+
+---
+
+## 表单
+
+表单操作需要 `form_id`，可通过 `feishu bitable views` 获取表单视图 ID。
+
+```bash
+feishu bitable form get <app_token> <table_id> <form_id>
+feishu bitable form update <app_token> <table_id> <form_id> [--name "问卷"] [--description "描述"] [--shared]
+feishu bitable form fields <app_token> <table_id> <form_id>
+feishu bitable form update-field <app_token> <table_id> <form_id> <field_id> \
+  [--visible] [--required] [--description "说明"]
+```
+
+---
+
+## 自动化工作流
+
+```bash
+feishu bitable workflow list <app_token>
+feishu bitable workflow update <app_token> <workflow_id> --enable   # 启用
+feishu bitable workflow update <app_token> <workflow_id> --disable  # 禁用
+```
