@@ -3,7 +3,7 @@
   "mcp": {
     "pencil": {
       "command": [
-        "C:\\Users\\Mi\\.vscode\\extensions\\highagency.pencildev-0.6.36\\out\\mcp-server-windows-x64.exe",
+        "/Users/fengzhen/.vscode/extensions/highagency.pencildev-0.6.36/out/mcp-server-darwin-arm64",
         "--app",
         "visual_studio_code"
       ],
