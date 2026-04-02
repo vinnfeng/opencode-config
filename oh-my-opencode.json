@@ -67,7 +67,7 @@
     },
     "_writing_note": "写作任务 - 优先 Mify",
     "writing": {
-      "model": "Mify-Kimi/moonshotai/Kimi-K2.5",
+      "model": "Mify-Kimi/Pro/moonshotai/Kimi-K2.5",
       "_fallback": "opencode/trinity-large-preview-free"
     }
   },
