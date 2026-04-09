@@ -1,19 +1,32 @@
 #!/usr/bin/env node
 /**
  * deploy.mjs — OpenCode 一键部署脚本（配置 + 二进制）
- *
- * 用途：将配置库的正确分支内容部署到本机，可选同时更新二进制
  * 支持：macOS / Linux / Windows
  *
- * 用法：
- *   node scripts/deploy.mjs                       # 只更新配置（默认）
- *   node scripts/deploy.mjs --full                # 全量：配置 + 二进制
- *   node scripts/deploy.mjs --binary              # 只更新二进制
- *   node scripts/deploy.mjs --check               # 只检查版本，不更新任何东西
- *   node scripts/deploy.mjs --dry-run             # 预览变更，不写任何文件
- *   node scripts/deploy.mjs --verify-only         # 只对比配置文件，不修改
- *   node scripts/deploy.mjs --key-mify=sk-xxx     # 直接传入 Mify key
- *   node scripts/deploy.mjs --key-bailian=sk-xxx  # 直接传入百炼 key（可省略）
+ * ─── 常用命令 ────────────────────────────────────────────────────────────────
+ *
+ *   node scripts/deploy.mjs                 # 首次安装 / 日常更新配置
+ *   node scripts/deploy.mjs --full          # 配置 + 二进制一起更新
+ *   node scripts/deploy.mjs --binary        # 只更新二进制
+ *   node scripts/deploy.mjs --check         # 只查版本，不动任何东西
+ *
+ * ─── Key 管理 ────────────────────────────────────────────────────────────────
+ *
+ *   首次运行会自动扫描已有配置。扫不到会提示输入，填一次后保存在本机，
+ *   后续运行不再重复问。
+ *
+ *   手动覆盖：
+ *   node scripts/deploy.mjs --key-mify=sk-xxx        # 替换 Mify Key
+ *   node scripts/deploy.mjs --mify-url=http://...    # 替换 Base URL
+ *
+ *   获取 Mify Key：https://llm.mioffice.cn/apikey
+ *
+ * ─── 其他选项 ────────────────────────────────────────────────────────────────
+ *
+ *   --dry-run        预览变更，不写任何文件
+ *   --verify-only    只对比，不修改
+ *   --key-bailian=   百炼 API Key（可选）
+ *   --mify-google-url= Google 模型用不同 Base URL 时指定
  *
  * ⚠️  opencode.json（MCP 配置、默认模型）是机器特定文件，本脚本不会覆盖它
  */
@@ -265,43 +278,73 @@ async function main() {
   if (CONFIG_ONLY && !VERIFY_ONLY) {
     header('Step 4  API Keys & Base URL');
 
-    // 1. 从 .keys 文件读取（持久化存储）
+    // ① .keys 文件（本脚本持久化存储，最可靠）
     const stored = readKeysFile();
-    mifyKey          = stored.MIFY_API_KEY         || '';
-    bailianKey       = stored.BAILIAN_API_KEY       || '';
-    mifyBaseUrl      = stored.MIFY_BASE_URL         || '';
-    mifyGoogleBaseUrl= stored.MIFY_GOOGLE_BASE_URL  || '';
+    mifyKey          = stored.MIFY_API_KEY        || '';
+    bailianKey       = stored.BAILIAN_API_KEY      || '';
+    mifyBaseUrl      = stored.MIFY_BASE_URL        || '';
+    mifyGoogleBaseUrl= stored.MIFY_GOOGLE_BASE_URL || '';
 
-    // 2. 从现有 opencode.jsonc 里补全（兼容旧版：.keys 不存在时回退）
-    const jsncPath = path.join(CFG_DIR, 'opencode.jsonc');
-    if (fs.existsSync(jsncPath)) {
-      const raw = fs.readFileSync(jsncPath, 'utf8');
-      if (!mifyKey)          { const m = raw.match(/"apiKey"\s*:\s*"(sk-[^"]+)"/);                                  if (m) mifyKey = m[1]; }
-      if (!bailianKey)       { const m = raw.match(/dashscope[\s\S]*?"apiKey"\s*:\s*"(sk-[^"]+)"/);                 if (m) bailianKey = m[1]; }
-      if (!mifyBaseUrl)      { const m = raw.match(/"baseURL"\s*:\s*"(https?:\/\/[^"]+?)\/anthropic"/);              if (m) mifyBaseUrl = m[1]; }
-      if (!mifyGoogleBaseUrl){ const m = raw.match(/"baseURL"\s*:\s*"(https?:\/\/[^"]+?)\/gemini"/);                 if (m) mifyGoogleBaseUrl = m[1]; }
+    // ② 环境变量（CI / 自动化场景）
+    if (!mifyKey     && process.env.MIFY_API_KEY)  { mifyKey    = process.env.MIFY_API_KEY;  log('Key：从环境变量 MIFY_API_KEY 检测到'); }
+    if (!mifyBaseUrl && process.env.MIFY_BASE_URL) { mifyBaseUrl= process.env.MIFY_BASE_URL; log('Base URL：从环境变量 MIFY_BASE_URL 检测到'); }
+
+    // ③ 扫描已有配置文件（兼容旧版 / 迁移场景）
+    const scanCandidates = [
+      path.join(CFG_DIR, 'opencode.jsonc'),                        // 本机已装的 opencode
+      path.join(HOME, '.config', 'opencode', 'opencode.jsonc'),    // macOS/Linux 标准路径
+    ];
+    for (const src of [...new Set(scanCandidates)]) {
+      if (!fs.existsSync(src)) continue;
+      try {
+        const raw = fs.readFileSync(src, 'utf8');
+        if (!mifyKey)          { const m = raw.match(/"apiKey"\s*:\s*"(sk-[^"]+)"/);                 if (m) { mifyKey    = m[1]; log(`Key：从 ${path.relative(HOME, src)} 自动检测到`); } }
+        if (!bailianKey)       { const m = raw.match(/dashscope[\s\S]*?"apiKey"\s*:\s*"(sk-[^"]+)"/);if (m) bailianKey  = m[1]; }
+        if (!mifyBaseUrl)      { const m = raw.match(/"baseURL"\s*:\s*"(https?:\/\/[^"]+?)\/anthropic"/); if (m) { mifyBaseUrl = m[1]; log(`Base URL：从 ${path.relative(HOME, src)} 自动检测到`); } }
+        if (!mifyGoogleBaseUrl){ const m = raw.match(/"baseURL"\s*:\s*"(https?:\/\/[^"]+?)\/gemini"/);    if (m) mifyGoogleBaseUrl = m[1]; }
+      } catch {}
     }
 
-    // 3. CLI 参数覆盖
+    // ④ CLI 参数（最高优先级，用于手动覆盖）
     if (getArg('key-mify'))        mifyKey          = getArg('key-mify');
     if (getArg('key-bailian'))     bailianKey       = getArg('key-bailian');
     if (getArg('mify-url'))        mifyBaseUrl      = getArg('mify-url');
     if (getArg('mify-google-url')) mifyGoogleBaseUrl= getArg('mify-google-url');
 
-    // 4. 交互式输入兜底
-    if (!mifyKey)          mifyKey          = await prompt('Mify API Key（必填，sk-...）', mifyKey);
-    if (!mifyKey)        { fail('Mify API Key 不能为空'); process.exit(1); }
-    if (!mifyBaseUrl)      mifyBaseUrl      = await prompt('Mify Base URL（必填，内网地址）', mifyBaseUrl);
-    if (!mifyBaseUrl)    { fail('Mify Base URL 不能为空'); process.exit(1); }
-    if (!mifyGoogleBaseUrl) mifyGoogleBaseUrl = await prompt('Mify Google Base URL（回车同 Base URL）', mifyBaseUrl);
+    // ⑤ 交互式输入兜底（检测不到时才问）
+    if (!mifyKey) {
+      log('');
+      log('未检测到 Mify Key。没有的话先去申请（公司内网登录即可）：');
+      log('  https://llm.mioffice.cn/apikey');
+      log('');
+      mifyKey = await prompt('Mify API Key (sk-...)', '');
+    }
+    if (!mifyKey) { fail('Mify API Key 不能为空，安装中止'); process.exit(1); }
+
+    if (!mifyBaseUrl) {
+      log('');
+      log('未检测到 Mify Base URL（内网服务地址）。');
+      log('不知道？联系发给你这个链接的同学，或查看内部文档。');
+      log('');
+      mifyBaseUrl = await prompt('Mify Base URL (http://...)', '');
+    }
+    if (!mifyBaseUrl) { fail('Mify Base URL 不能为空，安装中止'); process.exit(1); }
+
+    // Google 路由默认与主 Base URL 同域（大多数情况下一致）
     if (!mifyGoogleBaseUrl) mifyGoogleBaseUrl = mifyBaseUrl;
-    if (!bailianKey)       bailianKey       = await prompt('百炼 API Key（可选，直接回车跳过）', '');
 
-    // 5. 写回 .keys 文件（下次自动读取，不再重复输入）
-    if (!DRY_RUN) writeKeysFile({ MIFY_API_KEY: mifyKey, MIFY_BASE_URL: mifyBaseUrl, MIFY_GOOGLE_BASE_URL: mifyGoogleBaseUrl, ...(bailianKey ? { BAILIAN_API_KEY: bailianKey } : {}) });
+    if (!bailianKey) bailianKey = await prompt('百炼 API Key（可选，没有直接回车跳过）', '');
 
-    const base = mifyBaseUrl.replace(/\/$/, '');
-    ok(`Keys 就绪 — Mify: ${mifyKey.slice(0,12)}…  Base: ${base}  百炼: ${bailianKey ? bailianKey.slice(0,12)+'…' : '未配置'}`);
+    // ⑥ 写回 .keys，下次运行自动读取，不再重复问
+    if (!DRY_RUN) writeKeysFile({
+      MIFY_API_KEY: mifyKey, MIFY_BASE_URL: mifyBaseUrl,
+      MIFY_GOOGLE_BASE_URL: mifyGoogleBaseUrl,
+      ...(bailianKey ? { BAILIAN_API_KEY: bailianKey } : {}),
+    });
+
+    const reused = mifyKey === stored.MIFY_API_KEY && mifyBaseUrl === stored.MIFY_BASE_URL;
+    if (reused) ok(`沿用已有 Key — ${mifyKey.slice(0,12)}…（如需更换：--key-mify=新key）`);
+    else        ok(`Keys 就绪 — Mify: ${mifyKey.slice(0,12)}…  Base: ${mifyBaseUrl.replace(/\/$/, '')}  百炼: ${bailianKey ? bailianKey.slice(0,12)+'…' : '未配置'}`);
   }
 
   // ── Step 5: 部署文件 ───────────────────────────────────────────────────────
