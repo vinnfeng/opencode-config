@@ -1,0 +1,10 @@
+node_modules
+package.json
+bun.lock
+*.bak
+*.bak.*
+plugins/
+opencode.jsonc
+.keys
+.installed_version
+.previous_version
