@@ -1,4 +1,4 @@
----
+﻿---
 name: feishu
 description: |-
   通过 CLI 管控飞书全量资源：文档、知识库、云盘、多维表格、表格、权限、日历日程、任务待办。
@@ -28,7 +28,7 @@ feishu --version
 
 - **找不到命令** → 提示用户安装：
   ```bash
-  npm install -g @mi/feishu@latest --registry https://pkgs.d.xiaomi.net/artifactory/api/npm/mi-npm/
+  npm install -g @mi/feishu@latest --registry https://your-npm-registry/
   ```
 - **版本号 < 本文件 frontmatter `version`** → 必须先升级（部分命令可能不存在）：
   ```bash
@@ -59,7 +59,7 @@ feishu auth logout   # 清除已保存的 token
 
 ### 企业邮箱
 
-涉及人员的操作（权限管理、@提及、人员字段）统一使用小米企业邮箱 `xxx@xiaomi.com`。用户提及某人时也应转换为邮箱格式。
+涉及人员的操作（权限管理、@提及、人员字段）统一使用企业邮箱 `xxx@example.com`。用户提及某人时也应转换为邮箱格式。
 
 ### 用户输入（人员参数）
 
@@ -68,7 +68,7 @@ feishu auth logout   # 清除已保存的 token
 | 格式 | 示例 | 说明 |
 |------|------|------|
 | 姓名 | `张三` | 通过企业内部搜索自动解析 |
-| 企业邮箱 | `zhangsan@xiaomi.com` | 直接解析为 open_id |
+| 企业邮箱 | `zhangsan@example.com` | 直接解析为 open_id |
 | open_id | `ou_xxx` | 已知时直接使用 |
 
 适用范围：`calendar add-attendees --user-ids`、`calendar freebusy --user-id`、`task member add --members`、`bitable` 人员字段。
@@ -78,7 +78,7 @@ feishu auth logout   # 清除已保存的 token
 各模块的特殊处理：
 - **权限管理（perm add/remove）**：直接传邮箱，无需转换
 - **文档 @提及（mention-user）**：用 `email=` 属性，CLI 自动解析为 open_id
-- **多维表格人员字段**：写入时支持 `[{"email":"xxx@xiaomi.com"}]` 或 `[{"name":"张三"}]`，CLI 自动解析为 open_id
+- **多维表格人员字段**：写入时支持 `[{"email":"xxx@example.com"}]` 或 `[{"name":"张三"}]`，CLI 自动解析为 open_id
 - **search `--owner`**：仍需 open_id，使用 `feishu user resolve <email>` 获取
 
 ### 时间格式
@@ -197,8 +197,8 @@ feishu comment add <url_or_token> -c "评论内容"
 ### 用户查找（user）
 
 ```bash
-feishu user resolve zhangsan@xiaomi.com                      # 邮箱 → open_id
-feishu user resolve zhangsan@xiaomi.com lisi@xiaomi.com      # 批量解析
+feishu user resolve zhangsan@example.com                      # 邮箱 → open_id
+feishu user resolve zhangsan@example.com lisi@example.com      # 批量解析
 feishu user info                                              # 查看当前用户信息
 feishu user info ou_xxx                                       # 查看指定用户信息
 ```
@@ -244,7 +244,7 @@ feishu docx update <url> --mode replace --select "旧内容...旧结尾" -c "新
 feishu docx update <url> --mode delete --select-title "## 过时章节"
 
 # @提及用户：直接传邮箱，CLI 自动解析为 open_id
-feishu docx update <url> --mode append -c '请 <mention-user email="zhangsan@xiaomi.com"/> 查看'
+feishu docx update <url> --mode append -c '请 <mention-user email="zhangsan@example.com"/> 查看'
 ```
 
 ### 创建文档（create）
@@ -337,10 +337,10 @@ feishu bitable delete-record <app_token> <table_id> <record_id>
 
 # 人员字段：支持三种格式，CLI 自动解析为 open_id（create/update/batch-create/batch-update 均支持）
 feishu bitable create-record <app_token> <table_id> --fields '{"负责人":[{"name":"张三"}]}'           # 姓名（IDM 搜索）
-feishu bitable create-record <app_token> <table_id> --fields '{"负责人":[{"email":"zhangsan@xiaomi.com"}]}'  # 邮箱
+feishu bitable create-record <app_token> <table_id> --fields '{"负责人":[{"email":"zhangsan@example.com"}]}'  # 邮箱
 feishu bitable create-record <app_token> <table_id> --fields '{"负责人":[{"id":"ou_xxx"}]}'           # open_id（已知时直接用）
 # 多人：混合格式均可
-feishu bitable create-record <app_token> <table_id> --fields '{"负责人":[{"name":"张三"},{"email":"lisi@xiaomi.com"}]}'
+feishu bitable create-record <app_token> <table_id> --fields '{"负责人":[{"name":"张三"},{"email":"lisi@example.com"}]}'
 
 # 日期字段：支持 "YYYY-MM-DD" 字符串，CLI 自动转为毫秒时间戳
 feishu bitable create-record <app_token> <table_id> --fields '{"截止日期":"2026-03-14"}'
@@ -727,9 +727,9 @@ feishu calendar reply-event --calendar-id <id> --event-id <eid> --status accept
 feishu calendar add-attendees --calendar-id <id> --event-id <eid> \
   --user-ids "张三"                                    # 姓名（IDM 搜索）
 feishu calendar add-attendees --calendar-id <id> --event-id <eid> \
-  --user-ids "zhangsan@xiaomi.com,lisi@xiaomi.com"     # 邮箱
+  --user-ids "zhangsan@example.com,lisi@example.com"     # 邮箱
 feishu calendar add-attendees --calendar-id <id> --event-id <eid> \
-  --user-ids "张三,lisi@xiaomi.com,ou_xxx"             # 混合
+  --user-ids "张三,lisi@example.com,ou_xxx"             # 混合
 feishu calendar add-attendees --calendar-id <id> --event-id <eid> \
   [--user-ids uid1,uid2] [--chat-ids oc_xxx]          # 至少提供其中一个
 feishu calendar list-attendees --calendar-id <id> --event-id <eid> [--page-size N]
@@ -803,8 +803,8 @@ feishu tasklist delete <guid>
 
 ```bash
 feishu perm list <token> --type docx
-feishu perm add <token> --type docx --member-id zhangsan@xiaomi.com --perm edit
-feishu perm remove <token> --type docx --member-id zhangsan@xiaomi.com
+feishu perm add <token> --type docx --member-id zhangsan@example.com --perm edit
+feishu perm remove <token> --type docx --member-id zhangsan@example.com
 ```
 
 `list` 资源类型：`doc` `docx` `sheet` `bitable` `file` `wiki` `mindnote` `minutes` `slides`（不支持 `folder`）
