@@ -279,7 +279,16 @@ async function main() {
     header('Step 4  API Keys & Base URL');
 
     // ① .keys 文件（本脚本持久化存储，最可靠）
-    const stored = readKeysFile();
+    let stored = readKeysFile();
+    // 向后兼容：旧版 key 名（MIFY_*）自动迁移到新名（PROVIDER_*）
+    if (!stored.PROVIDER_API_KEY && stored.MIFY_API_KEY) {
+      stored.PROVIDER_API_KEY = stored.MIFY_API_KEY;
+      stored.PROVIDER_BASE_URL = stored.MIFY_BASE_URL || '';
+      stored.PROVIDER_GOOGLE_BASE_URL = stored.MIFY_GOOGLE_BASE_URL || '';
+      delete stored.MIFY_API_KEY; delete stored.MIFY_BASE_URL; delete stored.MIFY_GOOGLE_BASE_URL;
+      if (!DRY_RUN) writeKeysFile(stored);
+      log('已自动迁移旧版 key 名称（MIFY_* → PROVIDER_*）');
+    }
     apiKey          = stored.PROVIDER_API_KEY        || '';
     bailianKey       = stored.BAILIAN_API_KEY      || '';
     baseUrl      = stored.PROVIDER_BASE_URL        || '';
