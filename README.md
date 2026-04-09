@@ -1,6 +1,6 @@
 # 开渠 OpenCode 配置库
 
-基于 [opencode-ai](https://github.com/sst/opencode) 的增强配置，接入 Mify 全模型 + 优化 agent 体系。
+基于 [opencode-ai](https://github.com/sst/opencode) 的增强配置，一个 Key 接入全模型 + 优化 agent 体系。
 
 ---
 
@@ -10,7 +10,7 @@
 |---|---|---|
 | 二进制 | 我们自己编译的（含优化）| 官方 npm 版 |
 | 适用人群 | 内部人员 | 同事 / 团队分享 |
-| 需要的 key | Mify（必填）+ 百炼（可选）| 仅 Mify |
+| 需要的 key | API Key（必填）+ 百炼（可选）| 仅 API Key |
 | 安装方式 | 下方个人版命令 | 下方社区版命令 |
 
 ---
@@ -69,7 +69,7 @@ irm https://raw.githubusercontent.com/vinnfeng/opencode/fengzhen/performance-tun
 
 | Key | 是否必填 | 获取地址 |
 |---|---|---|
-| Mify API Key | **必填** | 内部渠道获取 |
+| API Key | **必填** | 从服务商后台获取 |
 | 百炼 API Key | 可选（直接回车跳过）| 阿里云百炼平台 |
 
 - Key 仅保存在本机 `~/.config/opencode/.keys`，权限 600，**不会上传 git**
@@ -82,14 +82,11 @@ irm https://raw.githubusercontent.com/vinnfeng/opencode/fengzhen/performance-tun
 重新运行安装命令即可全量更新。如果只想单独操作：
 
 ```bash
-# 只更新所有 key（不重新下载二进制）
-bash <(curl -fsSL https://...setup.sh) --keys
-
-# 只换 Mify key
-bash <(curl -fsSL https://...setup.sh) --key mify
+# 只更换 API Key
+bash <(curl -fsSL https://...setup.sh) --api-key=sk-xxx
 
 # 只换百炼 key
-bash <(curl -fsSL https://...setup.sh) --key bailian
+bash <(curl -fsSL https://...setup.sh) --key-bailian=sk-xxx
 
 # 只更新二进制（不动 key）
 bash <(curl -fsSL https://...setup.sh) --binary
@@ -108,13 +105,15 @@ bash <(curl -fsSL https://...setup.sh) --help
 
 | Provider | 平台 | 主要模型 | Key |
 |---|---|---|---|
-| Mify-Anthropic | Mify 内网 | Claude Opus 4.6 / Sonnet 4.6 / Haiku 4.5 | MIFY_API_KEY |
-| Mify-OpenAI | Mify 内网 | GPT-5.4 Pro / GPT-5.4 | MIFY_API_KEY |
-| Mify-Google | Mify 内网 | Gemini 3.1 Pro / Flash | MIFY_API_KEY |
-| Mify-Zhipu | Mify 内网 | GLM-5 | MIFY_API_KEY |
+| Anthropic | Provider API | Claude Opus 4.6 / Sonnet 4.6 / Haiku 4.5 | PROVIDER_API_KEY |
+| OpenAI | Provider API | GPT-5.4 Pro / GPT-5.4 | PROVIDER_API_KEY |
+| Google | Provider API | Gemini 3.1 Pro / Flash | PROVIDER_API_KEY |
+| Zhipu | Provider API | GLM-5 | PROVIDER_API_KEY |
+| DeepSeek | Provider API | DeepSeek V3.2 / R1 | PROVIDER_API_KEY |
+| Kimi | Provider API | Kimi K2.5 | PROVIDER_API_KEY |
 | bailian | 阿里云百炼 | Qwen3.5-plus | BAILIAN_API_KEY（可选）|
 
-> Mify 四个 provider **共用一个 key**。
+> 以上 provider **共用一个 key**。
 
 ---
 
