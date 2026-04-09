@@ -1,4 +1,4 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6"
+  "model": "Anthropic/ppio/pa/claude-sonnet-4-6"
 }

@@ -1,7 +1,7 @@
 ---
 description: 技术调研，扫描新技术、最佳实践和潜在风险
 mode: subagent
-model: Mify-Google/gemini-3-flash-preview
+model: Google/gemini-3-flash-preview
 tools:
   write: false
   edit: false
