@@ -60,7 +60,11 @@ cd ~/.config/opencode && node scripts/deploy.mjs --full
 
 **Key 填错了 / 想换 Key**  
 ```bash
-node scripts/deploy.mjs --key-mify=你的新key
+# Windows
+cd "$env:APPDATA\opencode"; node scripts/deploy.mjs --key-mify=你的新key
+
+# macOS / Linux
+cd ~/.config/opencode && node scripts/deploy.mjs --key-mify=你的新key
 ```
 
 ---
