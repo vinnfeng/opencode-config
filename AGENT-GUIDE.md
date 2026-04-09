@@ -8,7 +8,7 @@
 
 ```
 vinnfeng/opencode-config          ← 本仓库（配置）
-├── opencode.template.jsonc       ← 模板，含占位符 MIFY_API_KEY / BAILIAN_API_KEY / PLUGIN_PATH
+├── opencode.template.jsonc       ← 模板，含占位符 PROVIDER_API_KEY / BAILIAN_API_KEY / PLUGIN_PATH
 ├── opencode.jsonc                ← 【gitignored】运行时生成，由脚本注入真实 key
 ├── opencode.jsonc.bak            ← 【gitignored】每次 generate_config 前自动备份
 ├── .keys                         ← 【gitignored】本机 key 存储，格式: KEY=value
@@ -36,7 +36,7 @@ vinnfeng/opencode                 ← 源码仓库（fork）
 - **`opencode.jsonc`**（gitignored）：由脚本从模板生成，含真实 key
 
 ### 脚本生成 opencode.jsonc 的逻辑
-1. 读取 `.keys` 中的 `MIFY_API_KEY` 和 `BAILIAN_API_KEY`
+1. 读取 `.keys` 中的 `PROVIDER_API_KEY` 和 `BAILIAN_API_KEY`
 2. 如果 `BAILIAN_API_KEY` 为空，生成时移除整个 bailian provider 块
 3. macOS 检查 `~/.cache/opencode/node_modules/oh-my-opencode` 是否存在，决定 `PLUGIN_PATH` 用 `file://` 还是 `@latest`
 4. 通过环境变量传值给 `node -e`，避免 shell 注入
@@ -44,9 +44,9 @@ vinnfeng/opencode                 ← 源码仓库（fork）
 ### Provider 映射
 | 占位符 | 对应 provider | 是否必填 |
 |---|---|---|
-| `MIFY_API_KEY` | Mify-Anthropic, Mify-OpenAI, Mify-Google, Mify-Zhipu | 必填 |
+| `PROVIDER_API_KEY` | Anthropic, OpenAI, Google, Zhipu, DeepSeek, Kimi | 必填 |
 | `BAILIAN_API_KEY` | bailian | 可选 |
-| `PLUGIN_PATH` | oh-my-opencode 插件路径 | 脚本自动检测 |
+| `PLUGIN_PATH` | oh-my-openagent 插件路径 | 脚本自动检测 |
 
 ---
 
@@ -55,7 +55,6 @@ vinnfeng/opencode                 ← 源码仓库（fork）
 ```
 无参数        完整流程：拉配置 → 设置所有 key → 生成 jsonc → 下载二进制
 --keys        只更新所有 key + 重新生成 jsonc（不动二进制）
---key mify    只更新 MIFY_API_KEY + 重新生成 jsonc
 --key bailian 只更新 BAILIAN_API_KEY + 重新生成 jsonc
 --binary      只更新二进制（不动 key 和配置）
 --rollback    回退到上一个版本（恢复备份二进制 + opencode.jsonc.bak）
@@ -101,7 +100,7 @@ vinnfeng/opencode                 ← 源码仓库（fork）
 
 ### 模板新增 provider
 1. 编辑 `opencode.template.jsonc`，在对应位置加 provider 块，key 用占位符
-2. 如果是新 placeholder（非 MIFY/BAILIAN），在脚本的 `prompt_key` 调用处加对应提示和 `generate_config` 中的替换
+2. 如果是新 placeholder（非 PROVIDER/BAILIAN），在脚本的 `prompt_key` 调用处加对应提示和 `generate_config` 中的替换
 3. 提交模板到 git，key 绝对不能进 git
 
 ### 添加新自定义 agent

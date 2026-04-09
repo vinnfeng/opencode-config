@@ -37,7 +37,7 @@ node scripts/deploy.mjs
 node scripts/deploy.mjs
 
 # 如果 key 有变化
-node scripts/deploy.mjs --key-mify=sk-xxx --key-bailian=sk-xxx
+node scripts/deploy.mjs --api-key=sk-xxx --key-bailian=sk-xxx
 
 # 只预览，不写文件
 node scripts/deploy.mjs --dry-run
@@ -82,9 +82,9 @@ cp -r ~/.config/opencode ~/.config/opencode.bak.<timestamp>
 
 | 占位符 | 替换为 |
 |--------|--------|
-| `MIFY_API_KEY` | 真实 Mify key（`sk-...`）|
+| `PROVIDER_API_KEY` | 真实 API Key（`sk-...`）|
 | `BAILIAN_API_KEY` | 真实百炼 key（可留空）|
-| `"oh-my-opencode@latest"` | `"file:///~/.cache/opencode/node_modules/oh-my-opencode"` |
+| `"oh-my-openagent@latest"` | `"file:///~/.cache/opencode/node_modules/oh-my-opencode"` |
 
 > **为什么替换 plugin 路径？**  
 > `@latest` 会在每次首次启动时触发完整 npm install（~100 个包，10-30s 挂起）。  
@@ -120,7 +120,7 @@ node scripts/deploy.mjs --verify-only
 **脚本已处理**：`deploy.mjs` 的 `sameContent()` 函数自动归一化
 
 ### 坑 3：opencode 首次启动卡死（10-30s）
-**原因**：plugin 路径用了 `oh-my-opencode@latest`，触发 npm install  
+**原因**：plugin 路径用了 `oh-my-openagent@latest`，触发 npm install  
 **修复**：`deploy.mjs` Step 5 自动替换为 `file://` 本地路径
 
 ### 坑 4：每次启动有 ~4s 延迟

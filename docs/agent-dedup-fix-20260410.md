@@ -63,7 +63,7 @@ TUI 显示 5 个不重复的 agent：
 **唯一权威源**：项目级 `.opencode/oh-my-openagent.jsonc`
 
 包含：
-- `agents` 段：Sisyphus/Librarian/Explore/Oracle/Build 的 Mify 模型 override + CodeBuff 哲学 prompt
+- `agents` 段：Sisyphus/Librarian/Explore/Oracle/Build 的 Provider 模型 override + CodeBuff 哲学 prompt
 - `categories` 段：按任务复杂度分配模型（quick/unspecified-low/unspecified-high/writing/git）
 - `experimental` 段：dynamic context pruning 配置
 - `sisyphus_agent` 段：Sisyphus 总控开关
