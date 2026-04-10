@@ -23,29 +23,24 @@
 |---|---|---|---|
 | git | `xcode-select --install` | `apt install git` | [git-scm.com](https://git-scm.com/download/win) |
 | node | [nodejs.org](https://nodejs.org) 或 `brew install node` | `apt install nodejs` | [nodejs.org](https://nodejs.org) |
-| curl | 系统自带 | `apt install curl` | 系统自带（Win10+）|
-| npm | 随 node 一起安装 | 随 node 一起安装 | 随 node 一起安装 |
-
-> npm 仅社区版需要。
 
 ---
 
-## 个人版安装（仅限内部人员）
+## 安装（内部人员）
 
 **macOS / Linux**
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/vinnfeng/opencode/fengzhen/performance-tuning/scripts/setup.sh)
+git clone -b main https://github.com/vinnfeng/opencode-config ~/.config/opencode
+node ~/.config/opencode/scripts/deploy.mjs --full
 ```
 
-**Windows（管理员 PowerShell）**
+**Windows（PowerShell）**
 ```powershell
-irm https://raw.githubusercontent.com/vinnfeng/opencode/fengzhen/performance-tuning/scripts/setup.ps1 | iex
+git clone -b office-windows https://github.com/vinnfeng/opencode-config "$env:APPDATA\opencode"
+node "$env:APPDATA\opencode\scripts\deploy.mjs" --full
 ```
 
-安装过程：
-1. 拉取配置文件（自动）
-2. 提示输入 API Key（见下方说明）
-3. 下载并安装定制版 opencode 二进制
+`--full` 会自动：拉取配置 → 备份 → 部署文件 → 生成含 key 的 jsonc → 下载二进制 → 修复启动延迟
 
 ---
 
@@ -53,12 +48,14 @@ irm https://raw.githubusercontent.com/vinnfeng/opencode/fengzhen/performance-tun
 
 **macOS / Linux**
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/vinnfeng/opencode/fengzhen/performance-tuning/scripts/community-setup.sh)
+git clone -b community https://github.com/vinnfeng/opencode-config ~/.config/opencode
+node ~/.config/opencode/scripts/deploy.mjs
 ```
 
 **Windows（PowerShell）**
 ```powershell
-irm https://raw.githubusercontent.com/vinnfeng/opencode/fengzhen/performance-tuning/scripts/community-setup.ps1 | iex
+git clone -b community https://github.com/vinnfeng/opencode-config "$env:APPDATA\opencode"
+node "$env:APPDATA\opencode\scripts\deploy.mjs"
 ```
 
 ---
@@ -79,28 +76,19 @@ irm https://raw.githubusercontent.com/vinnfeng/opencode/fengzhen/performance-tun
 
 ## 更新 / 管理 Key
 
-重新运行安装命令即可全量更新。如果只想单独操作：
-
 ```bash
-# 只更新所有 key（不重新下载二进制）
-bash <(curl -fsSL https://...setup.sh) --keys
+# 全量更新（进入配置库目录后执行）
+cd ~/.config/opencode          # macOS/Linux
+# cd $env:APPDATA\opencode     # Windows
 
-# 只换 API Key
-bash <(curl -fsSL https://...setup.sh) --api-key
-
-# 只换百炼 key
-bash <(curl -fsSL https://...setup.sh) --key bailian
-
-# 只更新二进制（不动 key）
-bash <(curl -fsSL https://...setup.sh) --binary
-
-# 查看帮助
-bash <(curl -fsSL https://...setup.sh) --help
+node scripts/deploy.mjs                    # 只更新配置
+node scripts/deploy.mjs --full             # 配置 + 二进制
+node scripts/deploy.mjs --api-key=sk-xxx   # 替换 API Key
+node scripts/deploy.mjs --key-bailian=sk-xxx  # 替换百炼 key
+node scripts/deploy.mjs --binary           # 只更新二进制
+node scripts/deploy.mjs --check            # 查看版本，不改任何东西
+node scripts/deploy.mjs --dry-run          # 预览变更，不写文件
 ```
-
-> 将 `...setup.sh` 替换为完整 URL，Windows 用 `setup.ps1` + `irm ... | iex` 方式。
->
-> 或者 `git clone` 下 source repo 后直接 `./scripts/setup.sh --keys` 也可以。
 
 ---
 
@@ -112,6 +100,8 @@ bash <(curl -fsSL https://...setup.sh) --help
 | OpenAI | Provider API | GPT-5.4 Pro / GPT-5.4 | PROVIDER_API_KEY |
 | Google | Provider API | Gemini 3.1 Pro / Flash | PROVIDER_API_KEY |
 | Zhipu | Provider API | GLM-5 | PROVIDER_API_KEY |
+| DeepSeek | Provider API | DeepSeek V3.2 / R1 | PROVIDER_API_KEY |
+| Kimi | Provider API | Kimi K2.5 | PROVIDER_API_KEY |
 | bailian | 阿里云百炼 | Qwen3.5-plus | BAILIAN_API_KEY（可选）|
 
 > 以上 provider **共用一个 key**。
@@ -154,8 +144,9 @@ bash <(curl -fsSL https://...setup.sh) --help
 
 **Q: 想重置配置**
 ```bash
-rm ~/.config/opencode/opencode.jsonc
-# 然后重新运行安装命令
+rm ~/.config/opencode/opencode.jsonc   # macOS/Linux
+# del $env:USERPROFILE\.config\opencode\opencode.jsonc  # Windows
+node scripts/deploy.mjs  # 重新生成
 ```
 
 **Q: Windows 报"无法加载文件，因为在此系统上禁止运行脚本"**
