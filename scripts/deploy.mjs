@@ -73,7 +73,7 @@ const SOURCE_REPO = 'vinnfeng/opencode';
 
 // ─── 分支选择 ────────────────────────────────────────────────────────────────
 
-const BRANCH = isWindows ? 'office-windows' : 'main';
+const BRANCH = 'community';
 
 // ─── 要部署的文件 ─────────────────────────────────────────────────────────────
 
@@ -226,6 +226,38 @@ async function updateBinary(latestTag) {
   fs.writeFileSync(VERSION_STAMP, latestTag, 'utf8');
 
   ok(`二进制已更新: ${latestTag}  →  ${binaryPath}`);
+  ensurePath(BINARY_DIR);
+}
+
+/** 自动把二进制目录加入 PATH（只需做一次，重开终端生效） */
+function ensurePath(dir) {
+  if (isWindows) {
+    try {
+      const cur = execFileSync('powershell', [
+        '-NoProfile', '-Command',
+        "[Environment]::GetEnvironmentVariable('PATH','User')"
+      ], { encoding: 'utf8' }).trim();
+      if (cur.toLowerCase().split(';').some(p => p.toLowerCase() === dir.toLowerCase())) {
+        log(`PATH 已包含 ${dir}`); return;
+      }
+      execFileSync('powershell', [
+        '-NoProfile', '-Command',
+        `[Environment]::SetEnvironmentVariable('PATH','${dir};' + [Environment]::GetEnvironmentVariable('PATH','User'),'User')`
+      ]);
+      ok(`已将 ${dir} 加入用户 PATH —— 重开终端即可使用 opencode`);
+    } catch { warn(`自动设置 PATH 失败，请手动运行：\n     [Environment]::SetEnvironmentVariable('PATH','${dir};'+[Environment]::GetEnvironmentVariable('PATH','User'),'User')`); }
+  } else {
+    const shell = process.env.SHELL || '';
+    const rc = shell.includes('zsh')
+      ? path.join(HOME, '.zshrc')
+      : path.join(HOME, '.bashrc');
+    try {
+      const content = fs.existsSync(rc) ? fs.readFileSync(rc, 'utf8') : '';
+      if (content.includes(dir)) { log(`PATH 已包含 ${dir}`); return; }
+      fs.appendFileSync(rc, `\n# opencode binary\nexport PATH="${dir}:$PATH"\n`);
+      ok(`已将 ${dir} 加入 ${path.basename(rc)} —— 重开终端即可使用 opencode`);
+    } catch { warn(`自动设置 PATH 失败，请手动在 shell rc 中加入：export PATH="${dir}:$PATH"`); }
+  }
 }
 
 // ─── 主流程 ───────────────────────────────────────────────────────────────────
@@ -394,8 +426,8 @@ async function main() {
 
       // 2. 替换 plugin 为 file:// 本地路径（避免每次启动触发 npm install，约 10-30s 延迟）
       const fileUrl = 'file:///' + PLUGIN_CACHE.replace(/\\/g, '/');
-      // 兼容两种模板占位符：main 用 PLUGIN_PATH，office-windows 用 oh-my-openagent@latest
-      jsonc = jsonc.replace(/"PLUGIN_PATH"|"oh-my-openagent@latest"/, `"${fileUrl}"`);
+      // 兼容两种模板占位符：main 用 PLUGIN_PATH，office-windows 用 oh-my-opencode@latest
+      jsonc = jsonc.replace(/"PLUGIN_PATH"|"oh-my-opencode@latest"/, `"${fileUrl}"`);
 
       const target  = path.join(CFG_DIR, 'opencode.jsonc');
       const existed = fs.existsSync(target);
