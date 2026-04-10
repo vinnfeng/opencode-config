@@ -73,7 +73,7 @@ const SOURCE_REPO = 'vinnfeng/opencode';
 
 // ─── 分支选择 ────────────────────────────────────────────────────────────────
 
-const BRANCH = 'community';
+const BRANCH = process.platform === 'win32' ? 'office-windows' : 'main';
 
 // ─── 要部署的文件 ─────────────────────────────────────────────────────────────
 
