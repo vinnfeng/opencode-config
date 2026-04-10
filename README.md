@@ -5,52 +5,59 @@
 
 ---
 
-## 装好只要两条命令
+## 一条命令搞定
 
 **前置：** [Node.js 18+](https://nodejs.org) · [Git](https://git-scm.com) · API Key（从你的 AI 服务商获取）
 
 **Windows（PowerShell）**
-
 ```powershell
-git clone -b community https://github.com/vinnfeng/opencode-config.git "$env:APPDATA\opencode"
-node "$env:APPDATA\opencode\scripts\deploy.mjs" --full
+irm https://raw.githubusercontent.com/vinnfeng/opencode-config/community/scripts/bootstrap.ps1 | iex
 ```
 
-**macOS / Linux**
-
+**macOS / Linux / WSL**
 ```bash
-git clone -b community https://github.com/vinnfeng/opencode-config.git ~/.config/opencode
-node ~/.config/opencode/scripts/deploy.mjs --full
+bash <(curl -fsSL https://raw.githubusercontent.com/vinnfeng/opencode-config/community/scripts/bootstrap.sh)
 ```
 
-脚本会自动检测已有配置；检测不到会提示你填，填一次以后不再问。
-
+脚本自动完成：克隆配置 → 检测已有 Key（检测不到才问）→ 下载二进制 → 写入 PATH。  
 装完：**重开一个终端** → 输入 `opencode` → 开搞。
 
-> **Windows 首次安装**还需要加一行 PATH（加一次，永久生效）：
-> ```powershell
-> [Environment]::SetEnvironmentVariable("PATH", "$env:LOCALAPPDATA\opencode-bin;" + [Environment]::GetEnvironmentVariable("PATH","User"), "User")
-> ```
-> 重开终端后生效。
+<details>
+<summary>手动安装（不想 curl | iex 的）</summary>
+
+```powershell
+# Windows
+git clone -b community https://github.com/vinnfeng/opencode-config "$env:APPDATA\opencode"
+node "$env:APPDATA\opencode\scripts\deploy.mjs" --full
+```
+```bash
+# macOS / Linux / WSL
+git clone -b community https://github.com/vinnfeng/opencode-config ~/.config/opencode
+node ~/.config/opencode/scripts/deploy.mjs --full
+```
+</details>
 
 ---
 
-## 更新
+## 更新 / 换 Key
 
 ```bash
-# Windows
-cd "$env:APPDATA\opencode"; node scripts/deploy.mjs --full
+# 已装过，进目录直接跑
+cd ~/.config/opencode && node scripts/deploy.mjs --full         # macOS/Linux/WSL
+# cd "$env:APPDATA\opencode"; node scripts/deploy.mjs --full   # Windows
 
-# macOS / Linux
-cd ~/.config/opencode && node scripts/deploy.mjs --full
+node scripts/deploy.mjs --api-key=sk-xxx    # 只换 Key
+node scripts/deploy.mjs --check             # 查版本不改任何东西
 ```
+
+或者重新执行上面那条一键命令，它会自动判断已安装还是首次安装。
 
 ---
 
 ## 遇到问题
 
-**opencode 命令找不到（Windows）**  
-→ PATH 那行跑了没？跑完重开一个 PowerShell。
+**opencode 命令找不到**  
+→ 重开一个终端（PATH 是装完后生效的）。还不行就重新跑一次 bootstrap 命令。
 
 **首次启动卡 10-30 秒**  
 → 插件第一次安装，等一次就好，以后正常。
