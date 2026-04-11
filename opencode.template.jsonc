@@ -63,6 +63,20 @@
             "context": 128000,
             "output": 16384
           }
+        },
+        "zhipuai/glm-5.1": {
+          "name": "GLM-5.1 (744B open-source, agent-best)",
+          "limit": {
+            "context": 128000,
+            "output": 16384
+          }
+        },
+        "zhipuai/glm-5-turbo": {
+          "name": "GLM-5 Turbo (agent-optimized)",
+          "limit": {
+            "context": 200000,
+            "output": 128000
+          }
         }
       }
     },
@@ -115,6 +129,13 @@
             "context": 200000,
             "output": 65536
           }
+        },
+        "azure_openai/gpt-oss-120b": {
+          "name": "GPT-OSS-120B (open-weight, single-GPU)",
+          "limit": {
+            "context": 200000,
+            "output": 65536
+          }
         }
       }
     },
@@ -145,6 +166,13 @@
             "context": 1000000,
             "output": 65536
           }
+        },
+        "gemini-3.1-flash-lite-preview": {
+          "name": "Gemini 3.1 Flash Lite (cheapest)",
+          "limit": {
+            "context": 1000000,
+            "output": 65536
+          }
         }
       }
     },
@@ -169,6 +197,13 @@
             "context": 200000,
             "output": 65536
           }
+        },
+        "tongyi/deepseek-v3.2-exp": {
+          "name": "DeepSeek V3.2-Exp (sparse attention)",
+          "limit": {
+            "context": 200000,
+            "output": 65536
+          }
         }
       }
     },
@@ -184,6 +219,13 @@
           "name": "Kimi K2.5",
           "limit": {
             "context": 200000,
+            "output": 65536
+          }
+        },
+        "tongyi/kimi-k2-thinking": {
+          "name": "Kimi K2 Thinking (1T MoE, 300+ tool calls)",
+          "limit": {
+            "context": 256000,
             "output": 65536
           }
         }
@@ -211,6 +253,38 @@
           "limit": {
             "context": 131072,
             "output": 16384
+          }
+        },
+        "qwen3.6-plus": {
+          "id": "qwen3.6-plus",
+          "name": "qwen3.6-plus (latest)",
+          "limit": {
+            "context": 131072,
+            "output": 16384
+          }
+        }
+      }
+    },
+    "xAI": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "xAI",
+      "options": {
+        "baseURL": "PROVIDER_URL/v1/",
+        "apiKey": "PROVIDER_API_KEY"
+      },
+      "models": {
+        "ppio/grok-4": {
+          "name": "Grok-4 (256K, deep reasoning)",
+          "limit": {
+            "context": 256000,
+            "output": 65536
+          }
+        },
+        "ppio/grok-3": {
+          "name": "Grok-3 (131K, enterprise)",
+          "limit": {
+            "context": 131000,
+            "output": 65536
           }
         }
       }
