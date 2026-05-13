@@ -15,3 +15,5 @@ opencode-mem.jsonc
 .keys
 .installed_version
 .previous_version
+package-lock.json
+plugins/auto-memory/
