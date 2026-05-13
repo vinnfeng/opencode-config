@@ -1,20 +1,20 @@
-﻿---
+---
 name: feishu
 description: |-
-  通过 CLI 管控飞书全量资源：文档、知识库、云盘、多维表格、表格、权限、日历日程、任务待办。
+  通过 CLI 管控飞书全量资源：文档、知识库、云盘、多维表格、表格、幻灯片、权限、日历日程、任务待办。
   触发条件（满足任一激活）：
-  1. 含飞书链接：*.feishu.cn 及对应路径（wiki/docx/base/sheets/drive/board/calendar/task）；
-  2. 提及飞书文档 / 知识库 / 云盘 / 多维表格 / 表格 / 权限分享 / 日历会议 / 任务待办；
+  1. 含飞书链接：*.feishu.cn 及对应路径（wiki/docx/base/sheets/drive/slides/board/calendar/task）；
+  2. 提及飞书文档 / 知识库 / 云盘 / 多维表格 / 表格 / 幻灯片 / 权限分享 / 日历会议 / 任务待办；
   3. 要求读取、创建、修改飞书相关资源。
   强制规则：带飞书 URL 时，仅用本技能feishu fetch读取，禁止直接调用 WebFetch 读取飞书内容（无权限认证）。
-version: 1.1.5
+version: 1.3.0
 ---
 
 # 飞书 CLI
 
 所有操作格式：`feishu <模块> <子命令>`，输出为 JSON。常用入口：`feishu fetch <url>` 读取任意资源、`feishu search` 搜索文档。
 
-模块总览：`docx` 文档 · `wiki` 知识库 · `drive` 云盘 · `bitable` 多维表格 · `sheet` 电子表格 · `perm` 权限 · `comment` 评论 · `search` 搜索 · `user` 用户 · `board` 画板 · `calendar`/`cal` 日历日程 · `task` 任务 · `tasklist` 任务清单
+模块总览：`docx` 文档 · `wiki` 知识库 · `drive` 云盘 · `bitable` 多维表格 · `sheet` 电子表格 · `slides` 幻灯片 · `perm` 权限 · `comment` 评论 · `search` 搜索 · `user` 用户 · `board` 画板 · `calendar`/`cal` 日历日程 · `task` 任务 · `tasklist` 任务清单
 
 ## 前置准备
 
@@ -28,7 +28,7 @@ feishu --version
 
 - **找不到命令** → 提示用户安装：
   ```bash
-  npm install -g @mi/feishu@latest --registry https://your-npm-registry/
+  npm install -g @mi/feishu@latest --registry PROVIDER_NPM_REGISTRY
   ```
 - **版本号 < 本文件 frontmatter `version`** → 必须先升级（部分命令可能不存在）：
   ```bash
@@ -59,7 +59,7 @@ feishu auth logout   # 清除已保存的 token
 
 ### 企业邮箱
 
-涉及人员的操作（权限管理、@提及、人员字段）统一使用企业邮箱 `xxx@example.com`。用户提及某人时也应转换为邮箱格式。
+涉及人员的操作（权限管理、@提及、人员字段）统一使用小米企业邮箱 `xxx@example.com`。用户提及某人时也应转换为邮箱格式。
 
 ### 用户输入（人员参数）
 
@@ -133,7 +133,21 @@ feishu fetch <url_or_token>
 | docx / wiki→文档 | `type`, `title`, `token`, `markdown`, `media` |
 | 多维表格 / wiki→多维表格 | `type`, `app_token`, `tables`, `hint` |
 | 电子表格 / wiki→电子表格 | `type`, `title`, `token`, `sheets[]`, `preview`（首个工作表前 50 行）, `hint` |
-| wiki→思维导图/文件/幻灯片 | `type`, `title`, `token`, `hint`（思维导图为只读，无法通过 CLI 创建或修改内容；如需创建思维导图，使用 Mermaid `mindmap` 代码块写入文档） |
+| 幻灯片 / wiki→幻灯片 | `type`, `title`, `token`, `revision_id`, `slide_count`, `slides[]`, `hint` |
+| wiki→思维导图/文件 | `type`, `title`, `token`, `hint`（思维导图为只读，无法通过 CLI 创建或修改内容；如需创建思维导图，使用 Mermaid `mindmap` 代码块写入文档） |
+
+#### 局部读取（--scope，仅 docx/wiki→文档）
+
+对大文档按需读取部分内容，减少传输量。**推荐工作流**：先 `--scope outline` 获取大纲和 block ID，再 `--scope section` 精确读取目标章节。
+
+```bash
+feishu fetch <url> --scope outline                                 # 仅返回标题大纲（含 block ID）
+feishu fetch <url> --scope keyword --keyword "搜索词"               # 返回匹配关键词的段落
+feishu fetch <url> --scope section --start-block-id <block_id>     # 返回指定标题下的完整章节
+feishu fetch <url> --scope range --start-block-id <id> --end-block-id <id>  # 返回区间内容
+```
+
+可选参数：`--context-before N`、`--context-after N`（keyword/section/range 模式下返回匹配点前后 N 个兄弟块）。
 
 ```bash
 feishu fetch <token> --type image                     # 下载媒体（返回 base64）
@@ -267,8 +281,12 @@ feishu docx create "团队文档" -c "内容" --wiki-space 7542032457XXX   # 指
 ### 读取文档（read）
 
 ```bash
-feishu docx read <doc_token>    # 返回纯文本 + 块统计
+feishu docx read <doc_token>    # 返回 Markdown 内容（通过 docs_ai 单次 API 调用）
 ```
+
+#### 局部读取（--scope）
+
+`docx read` 支持与 `fetch` 相同的 `--scope` 参数（outline/section/range/keyword），用法一致。适合已知 doc_token 的场景。
 
 ### 重命名文档标题（--title）
 
@@ -441,6 +459,8 @@ feishu bitable batch-get <app_token> <table_id> recA,recB,recC [--fields "Name,S
 
 ## 电子表格（sheet）
 
+> **性能提示**：对同一张电子表格执行多次操作时，先调 `feishu sheet sheets <token>` 获取 sheetId，后续 range 全部用 `<sheetId>!A1:D10` 格式。用 sheetId 可直接跳过工作表名查询，显著减少 API 调用。
+
 ### 创建
 
 不指定位置时默认存入个人知识库（`my_library`），与 `docx create` / `bitable create-app` 行为一致。`--folder`、`--wiki-node`、`--wiki-space` 三者互斥。
@@ -489,6 +509,7 @@ feishu sheet append <url_or_token> <工作表> -f rows.json
 
 ```bash
 feishu sheet write TOKEN "Sheet1!A1:B3" --values '[["Name","Score"],["Alice",95],["Bob",88]]'
+feishu sheet write TOKEN "Sheet1!A1" --values '[["Name","Score"],["Alice",95]]'  # 起始格自动推算结束位置
 feishu sheet append TOKEN Sheet1 --values '[["Carol",91],["Dave",77]]'
 ```
 
@@ -549,14 +570,33 @@ feishu sheet unmerge <url_or_token> <range>
 # 设置样式
 feishu sheet style <url_or_token> <range> [--bold] [--italic] [--font-size <pt>] \
   [--h-align LEFT|CENTER|RIGHT] [--v-align TOP|MIDDLE|BOTTOM] \
-  [--bg-color <#hex>] [--fore-color <#hex>] [--formatter <pattern>] [--clean]
+  [--bg-color <#hex>] [--fore-color <#hex>] [--formatter <pattern>] [--clean] \
+  [--json <raw_style_json>]
 ```
 
 `style` 示例：
 ```bash
 feishu sheet style TOKEN "Sheet1!A1:C1" --bold --bg-color "#FFD700" --h-align CENTER
 feishu sheet style TOKEN "Sheet1!B2:B50" --formatter "#,##0.00"   # 千分位两位小数
-feishu sheet style TOKEN "Sheet1!A:Z" --clean                     # 清除所有样式
+feishu sheet style TOKEN "Sheet1!A1:Z100" --clean                 # 清除样式（必须指定行范围，不支持 A:Z 整列）
+feishu sheet style TOKEN "Sheet1!A1:C1" --json '{"borderType":"full","wrapStrategy":1}'  # JSON 直传（覆盖所有样式属性）
+
+# 批量样式（多区域一次调用）
+feishu sheet batch-set-style TOKEN --data '[{"ranges":["sheetId!A1:C1"],"style":{"font":{"bold":true}}}]'
+
+# 下拉菜单/数据验证
+feishu sheet dropdown set TOKEN Sheet1 --range A1:A100 --values '["高","中","低"]'
+feishu sheet dropdown set TOKEN Sheet1 --range B1:B100 --values '["是","否"]' --multi-select
+feishu sheet dropdown get TOKEN Sheet1 --range A1:A100
+feishu sheet dropdown delete TOKEN Sheet1 --range A1:A100
+
+# 移动行列 / 行列属性
+feishu sheet move-dimension TOKEN Sheet1 --dimension ROWS --source-start 2 --source-end 5 --dest 10
+feishu sheet update-dimension TOKEN Sheet1 --dimension COLUMNS --start 0 --end 3 --size 200  # 设置列宽
+feishu sheet update-dimension TOKEN Sheet1 --dimension ROWS --start 5 --end 10 --visible false  # 隐藏行
+
+# 单元格内图片
+feishu sheet write-image TOKEN Sheet1 --range A1 --image-token img_v3_xxx
 ```
 
 > 批量读写、筛选/保护范围/浮动图片、Windows Git Bash 引号转义：见 `reference/sheet.md`
@@ -796,6 +836,110 @@ feishu tasklist delete <guid>
 ### 所需权限
 
 `task:task:read` · `task:task:write` · `task:tasklist:read` · `task:tasklist:write`
+
+---
+
+## 幻灯片（slides）
+
+创建、读取和编辑飞书演示文稿，使用 SML 2.0 XML 协议。支持 `/slides/` URL 和 wiki 节点（`obj_type=slides`）。
+
+### 创建演示文稿
+
+```bash
+# 创建空演示文稿
+feishu slides create "周报"
+
+# 使用内置模板创建（自动添加一页封面）
+feishu slides create "季度汇报" --template title
+
+# 创建并添加多页自定义幻灯片（JSON 数组，每项为 slide XML）
+feishu slides create "方案" --slides '["<slide xmlns=\"http://www.larkoffice.com/sml/2.0\"><data>...</data></slide>"]'
+
+# 模板 + 自定义混合（模板封面在前）
+feishu slides create "报告" --template title --slides '[...]'
+```
+
+返回：`{ presentation_id, revision_id, slides_added, url }`
+
+### 读取
+
+```bash
+# 读取完整演示文稿 XML
+feishu slides get <url_or_token> [--revision-id N]
+
+# 读取单页 slide XML（需要 slide_id，可从 get 结果的 XML 中提取）
+feishu slides get-slide <url_or_token> --slide-id <id> [--revision-id N]
+```
+
+### 编辑幻灯片
+
+```bash
+# 添加一页（内容来自 --content / --file / --template / stdin）
+feishu slides add-slide <url_or_token> --template content
+feishu slides add-slide <url_or_token> -c "<slide>...</slide>" [--before <slide_id>]
+feishu slides add-slide <url_or_token> -f slide.xml
+
+# 删除一页
+feishu slides delete-slide <url_or_token> --slide-id <id>
+
+# 块级替换/插入（精确修改页面元素）
+feishu slides replace <url_or_token> --slide-id <id> --parts '<JSON>'
+feishu slides replace <url_or_token> --slide-id <id> --parts-file parts.json
+```
+
+parts 格式（JSON 数组，最多 200 项）：
+
+| action | 必填字段 | 说明 |
+|--------|---------|------|
+| `block_replace` | `block_id`, `replacement`（XML） | 替换指定元素，自动注入 `id` 和 `<content/>` |
+| `block_insert` | `insertion`（XML）, `insert_before_block_id` | 在指定元素前插入 |
+
+### 图片上传
+
+```bash
+# 上传本地图片到演示文稿（单文件最大 20MB）
+feishu slides upload-image <url_or_token> --file ./chart.png
+feishu slides upload-image <url_or_token> --file https://example.com/img.png
+```
+
+返回 `{ file_token }` 用于 `<img src="file_token"/>` 引用。
+
+> ⚠️ slide XML 中 `<img src>` **只能**使用上传后的 `file_token`，不支持外部 HTTP URL。创建时可用 `@./path` 占位符自动上传。
+
+### 内置模板
+
+```bash
+# 查看所有模板
+feishu slides templates
+
+# 查看指定模板 XML
+feishu slides templates --name title
+```
+
+| 模板名 | 说明 |
+|--------|------|
+| `title` | 深色封面页（居中标题+副标题+底部信息） |
+| `content` | 浅色内容页（标题+正文+列表） |
+| `image-right` | 左字右图封面（暗色渐变） |
+| `two-column` | 左图右文分栏（白色背景） |
+| `data-cards` | 数据卡片页（横排 3 个 KPI 指标） |
+| `three-cards` | 三卡片带图（上图下文） |
+| `closing` | 深色结尾页（感谢/CTA） |
+
+### XML 协议要点
+
+- 命名空间：`xmlns="http://www.larkoffice.com/sml/2.0"`
+- 画布固定 960×540（16:9）
+- `<slide>` 子元素：`<style>?`（背景）、`<data>?`（内容容器）、`<note>?`（备注）
+- `<data>` 可包含：`<shape>`（文本框/形状）、`<img>`（图片）、`<line>`（线条）、`<table>`（表格）
+- `<shape>` **必须**包含 `<content/>` 子元素（即使为空）
+- 渐变色必须用 `rgba()` 格式带百分比 stop：`linear-gradient(135deg,rgba(15,23,42,1) 0%,rgba(56,97,140,1) 100%)`
+
+> 详见 `reference/slides-xml.md`
+
+### 所需权限
+
+`slides:presentation:read` · `slides:presentation:create` · `slides:presentation:update` · `slides:presentation:write_only` · `docs:document.media:upload`
 
 ---
 

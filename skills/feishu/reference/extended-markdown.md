@@ -129,7 +129,7 @@ print("Hello")
 
 **属性**: emoji (推荐使用文本名称，也支持 unicode 字符自动映射), background-color, border-color, text-color
 
-**背景色**: light-red/red, light-blue/blue, light-green/green, light-yellow/yellow, light-orange/orange, light-purple/purple, pale-gray/light-gray/dark-gray
+**背景色**: light-red/red, light-blue/blue, light-green/green, light-yellow/yellow, light-orange/orange, light-purple/purple, pale-gray/light-gray, dark-red, dark-orange, dark-yellow, dark-green, dark-blue, dark-purple, dark-gray
 
 **常用组合**:
 

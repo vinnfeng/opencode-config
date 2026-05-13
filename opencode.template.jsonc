@@ -35,6 +35,44 @@
         }
       }
     },
+    "MiMoMifyLLM": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "MiMo mify llm.mioffice.cn",
+      "options": {
+        "baseURL": "PROVIDER_URL/v1",
+        "apiKey": "PROVIDER_API_KEY"
+      },
+      "models": {
+        "xiaomi/mimo-v2.5-pro": {
+          "name": "MiMo V2.5 Pro (mify internal new entry)",
+          "limit": {
+            "context": 1000000,
+            "output": 131072
+          }
+        },
+        "xiaomi/mimo-v2.5": {
+          "name": "MiMo V2.5 (mify internal new entry)",
+          "limit": {
+            "context": 1000000,
+            "output": 131072
+          }
+        },
+        "xiaomi/mimo-v2-pro": {
+          "name": "MiMo V2 Pro (mify internal new entry)",
+          "limit": {
+            "context": 1000000,
+            "output": 131072
+          }
+        },
+        "xiaomi/mimo-v2-omni": {
+          "name": "MiMo V2 Omni (mify internal new entry)",
+          "limit": {
+            "context": 256000,
+            "output": 131072
+          }
+        }
+      }
+    },
     "Zhipu": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Zhipu",
