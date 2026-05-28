@@ -291,22 +291,8 @@
             "output": 32000
           }
         },
-        "mimo-v2-pro": {
-          "name": "MiMo V2 Pro (public, transition alias: 2026-06-01 auto-forwards to v2.5-pro)",
-          "limit": {
-            "context": 1048576,
-            "output": 32000
-          }
-        },
         "mimo-v2-flash": {
           "name": "MiMo V2 Flash (public)",
-          "limit": {
-            "context": 262144,
-            "output": 32000
-          }
-        },
-        "mimo-v2-omni": {
-          "name": "MiMo V2 Omni (public, transition alias: 2026-06-01 auto-forwards to v2.5)",
           "limit": {
             "context": 262144,
             "output": 32000
