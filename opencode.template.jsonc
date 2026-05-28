@@ -71,20 +71,6 @@
             "output": 131072
           }
         },
-        "xiaomi/mimo-v2-pro": {
-          "name": "MiMo V2 Pro (mify internal new entry)",
-          "limit": {
-            "context": 1000000,
-            "output": 131072
-          }
-        },
-        "xiaomi/mimo-v2-omni": {
-          "name": "MiMo V2 Omni (mify internal new entry)",
-          "limit": {
-            "context": 256000,
-            "output": 131072
-          }
-        },
         "xiaomi/mimo-v2-flash": {
           "name": "MiMo V2 Flash (mify internal new entry)",
           "limit": {
@@ -116,25 +102,11 @@
             "output": 131072
           }
         },
-        "xiaomi/mimo-v2-pro": {
-          "name": "MiMo v2 Pro (old mify route fallback)",
-          "limit": {
-            "context": 1000000,
-            "output": 131072
-          }
-        },
         "xiaomi/mimo-v2-flash": {
           "name": "MiMo v2 Flash (old mify route fallback)",
           "limit": {
             "context": 256000,
             "output": 65536
-          }
-        },
-        "xiaomi/mimo-v2-omni": {
-          "name": "MiMo v2 Omni (old mify route fallback)",
-          "limit": {
-            "context": 256000,
-            "output": 131072
           }
         },
         "xiaomi/deepseek-v3.1": {
