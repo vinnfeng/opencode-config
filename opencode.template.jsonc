@@ -160,6 +160,13 @@
         "apiKey": "PROVIDER_API_KEY"
       },
       "models": {
+        "gemini-3.5-flash": {
+          "name": "Gemini 3.5 Flash",
+          "limit": {
+            "context": 1000000,
+            "output": 65536
+          }
+        },
         "gemini-3.1-pro-preview": {
           "name": "Gemini 3.1 Pro",
           "limit": {
@@ -167,22 +174,8 @@
             "output": 65536
           }
         },
-        "gemini-3-flash-preview": {
-          "name": "Gemini 3 Flash",
-          "limit": {
-            "context": 1000000,
-            "output": 65536
-          }
-        },
         "gemini-2.5-pro": {
           "name": "Gemini 2.5 Pro",
-          "limit": {
-            "context": 1000000,
-            "output": 65536
-          }
-        },
-        "gemini-3.1-flash-lite-preview": {
-          "name": "Gemini 3.1 Flash Lite (cheapest)",
           "limit": {
             "context": 1000000,
             "output": 65536

@@ -13,8 +13,8 @@
       "fallback_models": ["Anthropic/ppio/pa/claude-sonnet-4-6", "OpenAI/azure_openai/gpt-5.5", "OpenAI/azure_openai/gpt-5.4", "Mify-Xiaomi/xiaomi/mimo-v2.5-pro", "Xiaomi/mimo-v2.5-pro"]
     },
     "visual-engineering": {
-      "model": "Google/gemini-3.1-pro-preview",
-      "fallback_models": ["Anthropic/ppio/pa/claude-sonnet-4-6", "Google/gemini-3-flash-preview"]
+      "model": "Google/gemini-3.5-flash",
+      "fallback_models": ["Google/gemini-3.1-pro-preview", "Anthropic/ppio/pa/claude-sonnet-4-6"]
     },
     "quick": {
       "model": "Anthropic/ppio/pa/claude-haiku-4-5-20251001",
