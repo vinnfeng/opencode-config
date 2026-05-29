@@ -15,7 +15,7 @@
     "visual-engineering": {
       "_comment": "场景：前端/UI 任务（开渠少做，但保留）。Gemini 视觉最强，sonnet 兜底",
       "model": "Google/gemini-3.5-flash",
-      "fallback_models": ["Google/gemini-3.1-pro-preview", "Anthropic/ppio/pa/claude-sonnet-4-6", "Google/gemini-3-flash-preview"]
+      "fallback_models": ["Google/gemini-3.1-pro-preview", "Anthropic/ppio/pa/claude-sonnet-4-6"]
     },
     "quick": {
       "_comment": "场景：单文件改动、typo fix、简单 config 修改。轻量快速，不浪费 opus",
