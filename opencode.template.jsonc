@@ -243,6 +243,13 @@
             "output": 65536
           }
         },
+        "gemini-3.5-flash": {
+          "name": "Gemini 3.5 Flash (frontier benchmark superior to 3.1-pro on agentic/coding/multimodal; reasoning enabled)",
+          "limit": {
+            "context": 1000000,
+            "output": 65536
+          }
+        },
         "gemini-3-flash-preview": {
           "name": "Gemini 3 Flash",
           "limit": {
