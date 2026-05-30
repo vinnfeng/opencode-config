@@ -12,17 +12,17 @@
         "apiKey": "PROVIDER_API_KEY"
       },
       "models": {
+        "ppio/pa/claude-opus-4-8": {
+          "name": "Claude Opus 4.8 (default, 1M ctx, 128K out)",
+          "limit": {
+            "context": 1000000,
+            "output": 128000
+          }
+        },
         "ppio/pa/claude-opus-4-7": {
           "name": "Claude Opus 4.7 (strongest, 1M ctx)",
           "limit": {
             "context": 1000000,
-            "output": 65536
-          }
-        },
-        "ppio/pa/claude-opus-4-6": {
-          "name": "Claude Opus 4.6 (strongest)",
-          "limit": {
-            "context": 200000,
             "output": 65536
           }
         },
