@@ -1,7 +1,7 @@
 ---
 description: 深度推理专家，无工具，纯思考，解复杂问题
 mode: subagent
-model: Anthropic/ppio/pa/claude-opus-4-7
+model: Anthropic/ppio/pa/claude-opus-4-8
 tools:
   write: false
   edit: false
