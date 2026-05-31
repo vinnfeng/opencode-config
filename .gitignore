@@ -10,6 +10,7 @@ bun.lock
 *backup*
 # 生成的配置（含 key，不入 git）
 plugins/oh-my-opencode/
+plugins/vibe-island.js
 opencode.jsonc
 opencode-mem.jsonc
 # 本地凭证 & 版本戳
