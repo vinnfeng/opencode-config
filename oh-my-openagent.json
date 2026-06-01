@@ -27,9 +27,9 @@
       ]
     },
     "visual-engineering": {
-      "model": "Google/gemini-3.5-flash",
+      "_comment": "mify Gemini native 不支持 gemini-3.5-flash（5/29 公司侧实证 400）；visual 主选使用 3.1-pro，Sonnet 兜底",
+      "model": "Google/gemini-3.1-pro-preview",
       "fallback_models": [
-        "Google/gemini-3.1-pro-preview",
         "Anthropic/ppio/pa/claude-sonnet-4-6"
       ]
     },
