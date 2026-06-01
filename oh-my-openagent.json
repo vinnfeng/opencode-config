@@ -5,37 +5,63 @@
     "ultrabrain": {
       "_comment": "场景：架构决策、复杂多系统调试、算法设计。需要最强推理+工具调用稳定性",
       "model": "Anthropic/ppio/pa/claude-opus-4-8",
-      "fallback_models": ["Anthropic/ppio/pa/claude-opus-4-7", "OpenAI/azure_openai/gpt-5.5", "OpenAI/azure_openai/gpt-5.4", "Anthropic/ppio/pa/claude-sonnet-4-6"]
+      "fallback_models": [
+        "Anthropic/ppio/pa/claude-opus-4-7",
+        "OpenAI/azure_openai/gpt-5.5",
+        "OpenAI/azure_openai/gpt-5.4",
+        "Anthropic/ppio/pa/claude-sonnet-4-6"
+      ]
     },
     "deep": {
       "_comment": "场景：调研报告、自主 end-to-end 长任务（如 #129/#130 调研）。需要强推理+长上下文",
       "model": "Anthropic/ppio/pa/claude-opus-4-8",
-      "fallback_models": ["Anthropic/ppio/pa/claude-opus-4-7", "Anthropic/ppio/pa/claude-sonnet-4-6", "OpenAI/azure_openai/gpt-5.5", "OpenAI/azure_openai/gpt-5.4"]
+      "fallback_models": [
+        "Anthropic/ppio/pa/claude-opus-4-7",
+        "Anthropic/ppio/pa/claude-sonnet-4-6",
+        "OpenAI/azure_openai/gpt-5.5",
+        "OpenAI/azure_openai/gpt-5.4"
+      ]
     },
     "visual-engineering": {
-      "_comment": "场景：前端/UI 任务（开渠少做，但保留）。Gemini 视觉最强，sonnet 兜底",
-      "model": "Google/gemini-3.5-flash",
-      "fallback_models": ["Google/gemini-3.1-pro-preview", "Anthropic/ppio/pa/claude-sonnet-4-6"]
+      "_comment": "场景：前端/UI 任务。公司 mify Gemini native 不支持 3.5-flash(5/29实证400)，主选降级 3.1-pro，sonnet 兜底",
+      "model": "Google/gemini-3.1-pro-preview",
+      "fallback_models": [
+        "Anthropic/ppio/pa/claude-sonnet-4-6"
+      ]
     },
     "quick": {
       "_comment": "场景：单文件改动、typo fix、简单 config 修改。轻量快速，不浪费 opus",
       "model": "Anthropic/ppio/pa/claude-haiku-4-5-20251001",
-      "fallback_models": ["OpenAI/azure_openai/gpt-5-nano", "Anthropic/ppio/pa/claude-haiku-4-5"]
+      "fallback_models": [
+        "OpenAI/azure_openai/gpt-5-nano",
+        "Anthropic/ppio/pa/claude-haiku-4-5"
+      ]
     },
     "writing": {
       "_comment": "场景：飞书文档、调研报告、中文技术写作。sonnet 中文表达好，百炼 qwen 中文兜底",
       "model": "Anthropic/ppio/pa/claude-sonnet-4-6",
-      "fallback_models": ["Zhipu/zhipuai/glm-5", "Kimi/tongyi/kimi-k2.5"]
+      "fallback_models": [
+        "Zhipu/zhipuai/glm-5",
+        "Kimi/tongyi/kimi-k2.5"
+      ]
     },
     "unspecified-high": {
       "_comment": "场景：分类不明的高难度任务（兜底强模型）。sonnet 为主力，opus 备用",
       "model": "Anthropic/ppio/pa/claude-sonnet-4-6",
-      "fallback_models": ["Anthropic/ppio/pa/claude-opus-4-8", "Anthropic/ppio/pa/claude-opus-4-7", "OpenAI/azure_openai/gpt-5.5", "OpenAI/azure_openai/gpt-5.4"]
+      "fallback_models": [
+        "Anthropic/ppio/pa/claude-opus-4-8",
+        "Anthropic/ppio/pa/claude-opus-4-7",
+        "OpenAI/azure_openai/gpt-5.5",
+        "OpenAI/azure_openai/gpt-5.4"
+      ]
     },
     "unspecified-low": {
       "_comment": "场景：分类不明的低难度任务（轻量兜底）。haiku 快速，qwen 备用",
       "model": "Anthropic/ppio/pa/claude-haiku-4-5-20251001",
-      "fallback_models": ["Xiaomi/xiaomi/deepseek-v3.1", "OpenAI/azure_openai/gpt-5-nano"]
+      "fallback_models": [
+        "Xiaomi/xiaomi/deepseek-v3.1",
+        "OpenAI/azure_openai/gpt-5-nano"
+      ]
     }
   },
   "background_task": {
@@ -51,8 +77,13 @@
         "turns": 3
       },
       "strategies": {
-        "deduplication": { "enabled": true },
-        "supersede_writes": { "enabled": true, "aggressive": false }
+        "deduplication": {
+          "enabled": true
+        },
+        "supersede_writes": {
+          "enabled": true,
+          "aggressive": false
+        }
       }
     }
   }
