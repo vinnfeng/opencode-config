@@ -1,7 +1,7 @@
 ---
 description: 专职代码实现，读懂再动手，改完必验
 mode: subagent
-model: Mify-OpenAI/azure_openai/gpt-5.4
+model: OpenAI/azure_openai/gpt-5.4
 tools:
   write: true
   edit: true
