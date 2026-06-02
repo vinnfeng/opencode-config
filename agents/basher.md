@@ -1,7 +1,7 @@
 ---
 description: Shell 专家，安全执行终端命令、构建、测试、安装依赖
 mode: subagent
-model: Anthropic/ppio/pa/claude-haiku-4-5-20251001
+model: Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001
 tools:
   write: false
   edit: false

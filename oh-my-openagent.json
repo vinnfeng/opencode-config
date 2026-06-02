@@ -4,63 +4,63 @@
   "categories": {
     "ultrabrain": {
       "_comment": "架构决策、复杂多系统调试、算法设计：先用最强 Claude，再试 GPT，再降到 Sonnet/MiMo",
-      "model": "Anthropic/ppio/pa/claude-opus-4-8",
+      "model": "Mify-Anthropic/ppio/pa/claude-opus-4-8",
       "fallback_models": [
-        "Anthropic/ppio/pa/claude-opus-4-7",
-        "OpenAI/azure_openai/gpt-5.5",
-        "OpenAI/azure_openai/gpt-5.4",
-        "Anthropic/ppio/pa/claude-sonnet-4-6",
+        "Mify-Anthropic/ppio/pa/claude-opus-4-7",
+        "Mify-OpenAI/azure_openai/gpt-5.5",
+        "Mify-OpenAI/azure_openai/gpt-5.4",
+        "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
         "Mify-Xiaomi/xiaomi/mimo-v2.5-pro",
         "Xiaomi/mimo-v2.5-pro"
       ]
     },
     "deep": {
       "_comment": "调研报告、自主 end-to-end 长任务：强推理+长上下文，有限 fallback 快速收敛",
-      "model": "Anthropic/ppio/pa/claude-opus-4-8",
+      "model": "Mify-Anthropic/ppio/pa/claude-opus-4-8",
       "fallback_models": [
-        "Anthropic/ppio/pa/claude-opus-4-7",
-        "Anthropic/ppio/pa/claude-sonnet-4-6",
-        "OpenAI/azure_openai/gpt-5.5",
-        "OpenAI/azure_openai/gpt-5.4",
+        "Mify-Anthropic/ppio/pa/claude-opus-4-7",
+        "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
+        "Mify-OpenAI/azure_openai/gpt-5.5",
+        "Mify-OpenAI/azure_openai/gpt-5.4",
         "Mify-Xiaomi/xiaomi/mimo-v2.5-pro",
         "Xiaomi/mimo-v2.5-pro"
       ]
     },
     "visual-engineering": {
       "_comment": "mify Gemini native 不支持 gemini-3.5-flash（5/29 公司侧实证 400）；visual 主选使用 3.1-pro，Sonnet 兜底",
-      "model": "Google/gemini-3.1-pro-preview",
+      "model": "Mify-Google/gemini-3.1-pro-preview",
       "fallback_models": [
-        "Anthropic/ppio/pa/claude-sonnet-4-6"
+        "Mify-Anthropic/ppio/pa/claude-sonnet-4-6"
       ]
     },
     "quick": {
-      "model": "Anthropic/ppio/pa/claude-haiku-4-5-20251001",
+      "model": "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
       "fallback_models": [
-        "OpenAI/azure_openai/o4-mini",
+        "Mify-OpenAI/azure_openai/o4-mini",
         "Xiaomi/mimo-v2.5"
       ]
     },
     "writing": {
-      "model": "Anthropic/ppio/pa/claude-sonnet-4-6",
+      "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
       "fallback_models": [
-        "Zhipu/zhipuai/glm-5",
-        "Kimi/tongyi/kimi-k2.5",
+        "Mify-Zhipu/zhipuai/glm-5",
+        "Mify-Kimi/tongyi/kimi-k2.5",
         "Mify-Xiaomi/xiaomi/mimo-v2.5-pro"
       ]
     },
     "unspecified-high": {
-      "model": "Anthropic/ppio/pa/claude-sonnet-4-6",
+      "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
       "fallback_models": [
-        "Anthropic/ppio/pa/claude-opus-4-8",
-        "Anthropic/ppio/pa/claude-opus-4-7",
-        "OpenAI/azure_openai/gpt-5.5",
-        "OpenAI/azure_openai/gpt-5.4",
+        "Mify-Anthropic/ppio/pa/claude-opus-4-8",
+        "Mify-Anthropic/ppio/pa/claude-opus-4-7",
+        "Mify-OpenAI/azure_openai/gpt-5.5",
+        "Mify-OpenAI/azure_openai/gpt-5.4",
         "Mify-Xiaomi/xiaomi/mimo-v2.5-pro",
         "Xiaomi/mimo-v2.5-pro"
       ]
     },
     "unspecified-low": {
-      "model": "Anthropic/ppio/pa/claude-haiku-4-5-20251001",
+      "model": "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
       "fallback_models": [
         "Mify-Xiaomi/xiaomi/mimo-v2.5",
         "Xiaomi/mimo-v2.5"
