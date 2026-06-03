@@ -4,9 +4,9 @@
   ],
   "$schema": "https://opencode.ai/config.json",
   "provider": {
-    "Anthropic": {
+    "Mify-Anthropic": {
       "npm": "@ai-sdk/anthropic",
-      "name": "Anthropic",
+      "name": "Mify-Anthropic",
       "options": {
         "baseURL": "PROVIDER_URL/anthropic",
         "apiKey": "PROVIDER_API_KEY"
@@ -49,9 +49,9 @@
         }
       }
     },
-    "Zhipu": {
+    "Mify-Zhipu": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Zhipu",
+      "name": "Mify-Zhipu",
       "options": {
         "baseURL": "PROVIDER_URL/v1/",
         "apiKey": "PROVIDER_API_KEY"
@@ -94,9 +94,9 @@
         }
       }
     },
-    "OpenAI": {
+    "Mify-OpenAI": {
       "npm": "@ai-sdk/openai",
-      "name": "OpenAI",
+      "name": "Mify-OpenAI",
       "options": {
         "baseURL": "PROVIDER_URL/v1/",
         "apiKey": "PROVIDER_API_KEY"
@@ -153,7 +153,7 @@
         }
       }
     },
-    "Google": {
+    "Mify-Google": {
       "npm": "@ai-sdk/google",
       "options": {
         "baseURL": "PROVIDER_GOOGLE_URL/gemini",
@@ -183,9 +183,9 @@
         }
       }
     },
-    "DeepSeek": {
+    "Mify-DeepSeek": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "DeepSeek",
+      "name": "Mify-DeepSeek",
       "options": {
         "baseURL": "PROVIDER_URL/v1/",
         "apiKey": "PROVIDER_API_KEY"
@@ -214,9 +214,9 @@
         }
       }
     },
-    "Kimi": {
+    "Mify-Kimi": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Kimi",
+      "name": "Mify-Kimi",
       "options": {
         "baseURL": "PROVIDER_URL/v1/",
         "apiKey": "PROVIDER_API_KEY"
@@ -334,9 +334,9 @@
         }
       }
     },
-    "xAI": {
+    "Mify-xAI": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "xAI",
+      "name": "Mify-xAI",
       "options": {
         "baseURL": "PROVIDER_URL/v1/",
         "apiKey": "PROVIDER_API_KEY"
