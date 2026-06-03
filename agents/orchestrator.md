@@ -1,7 +1,7 @@
 ---
 description: 开渠主编排，分析任务并协调子 Agent 完成工作
 mode: primary
-model: Anthropic/ppio/pa/claude-sonnet-4-6
+model: Mify-Anthropic/ppio/pa/claude-sonnet-4-6
 tools:
   write: true
   edit: true

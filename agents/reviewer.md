@@ -1,7 +1,7 @@
 ---
 description: 代码审查，简洁犀利，找问题不夸奖
 mode: subagent
-model: Anthropic/ppio/pa/claude-sonnet-4-6
+model: Mify-Anthropic/ppio/pa/claude-sonnet-4-6
 tools:
   write: false
   edit: false

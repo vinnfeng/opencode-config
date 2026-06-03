@@ -1,7 +1,7 @@
 ---
 description: 架构师，设计技术方案和 API 边界
 mode: subagent
-model: OpenAI/azure_openai/gpt-5.3-codex
+model: Mify-OpenAI/azure_openai/gpt-5.3-codex
 tools:
   write: true
   edit: false

@@ -109,7 +109,7 @@ vinnfeng/opencode                 ← 源码仓库（fork）
 ---
 name: agent-name
 description: 说明
-model: ppio/pa/claude-sonnet-4-6
+model: Mify-Anthropic/ppio/pa/claude-sonnet-4-6
 mode: subagent   # 或 primary
 tools: []        # 工具列表
 ---
