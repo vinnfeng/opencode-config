@@ -38,7 +38,7 @@ vinnfeng/opencode                 ← 源码仓库（fork）
 ### 脚本生成 opencode.jsonc 的逻辑
 1. 读取 `.keys` 中的 `PROVIDER_API_KEY` 和 `BAILIAN_API_KEY`
 2. 如果 `BAILIAN_API_KEY` 为空，生成时移除整个 bailian provider 块
-3. macOS 检查 `~/.cache/opencode/node_modules/oh-my-opencode` 是否存在，决定 `PLUGIN_PATH` 用 `file://` 还是 `@latest`
+3. macOS 检查 `~/.cache/opencode/packages/node_modules/oh-my-opencode` 是否存在，决定 `PLUGIN_PATH` 用 `file://` 还是 `@latest`
 4. 通过环境变量传值给 `node -e`，避免 shell 注入
 
 ### Provider 映射
@@ -46,7 +46,7 @@ vinnfeng/opencode                 ← 源码仓库（fork）
 |---|---|---|
 | `PROVIDER_API_KEY` | Anthropic, OpenAI, Google, Zhipu, DeepSeek, Kimi | 必填 |
 | `BAILIAN_API_KEY` | bailian | 可选 |
-| `PLUGIN_PATH` | oh-my-openagent 插件路径 | 脚本自动检测 |
+| `PLUGIN_PATH` | oh-my-opencode 载体增强插件路径 | 脚本自动检测 |
 
 ---
 

@@ -52,7 +52,7 @@ const REPO_DIR = isWindows
   : CFG_DIR; // macOS/Linux：配置目录本身就是 git repo
 
 /** plugin 缓存路径（用 file:// 绕过 npm install 挂起） */
-const PLUGIN_CACHE = path.join(HOME, '.cache', 'opencode', 'node_modules', 'oh-my-opencode');
+const PLUGIN_CACHE = path.join(HOME, '.cache', 'opencode', 'packages', 'node_modules', 'oh-my-opencode');
 
 /** opencode 工作目录（需要放 package-lock.json 避免每次启动 reify 延迟） */
 const OPENCODE_WORKDIR = path.join(HOME, '.opencode');
