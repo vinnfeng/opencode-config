@@ -1,16 +1,4 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "mcp": {
-    "feishu-mcp-pro": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "--registry=PROVIDER_NPM_REGISTRY",
-        "@PROVIDER_NPM_NAMESPACE/feishu-mcp-pro@latest"
-      ],
-      "enabled": true
-    }
-  },
   "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6"
 }
