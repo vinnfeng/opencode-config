@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
-  "_comment": "开渠 category fallback 映射 v0.2 | 2026-05-27 | 按开渠工作场景（调研/编排/报告/快速修改）重设，模型全部来自 mify 池实测可用",
+  "_comment": "公司 OpenCode 全局通用 category 基线 v0.3 | 2026-06-10 | 仅保留跨伙伴默认模型档位；项目特化策略下沉到各项目 .opencode/oh-my-openagent.json[c]",
   "categories": {
     "ultrabrain": {
-      "_comment": "场景：架构决策、复杂多系统调试、算法设计。需要最强推理+工具调用稳定性",
+      "_comment": "通用高难度推理、复杂调试、架构决策；默认走降本 ppio GPT-5.5，Opus/Azure 仅作保留兜底",
       "model": "Mify-OpenAI/ppio/pa/gpt-5.5",
       "fallback_models": [
         "Mify-Anthropic/ppio/pa/claude-opus-4-8",
@@ -14,7 +14,7 @@
       ]
     },
     "deep": {
-      "_comment": "场景：调研报告、自主 end-to-end 长任务（如 #129/#130 调研）。需要强推理+长上下文",
+      "_comment": "通用深度调研、自主 end-to-end 长任务；默认走降本 ppio GPT-5.5，Claude/Azure 作兜底",
       "model": "Mify-OpenAI/ppio/pa/gpt-5.5",
       "fallback_models": [
         "Mify-Anthropic/ppio/pa/claude-opus-4-8",
@@ -25,14 +25,14 @@
       ]
     },
     "visual-engineering": {
-      "_comment": "场景：前端/UI 任务。公司 mify Gemini native 不支持 3.5-flash(5/29实证400)，主选降级 3.1-pro，sonnet 兜底",
+      "_comment": "通用前端/UI/多模态任务；公司 mify Gemini native 暂不支持 3.5-flash，主选 3.1-pro，Sonnet 兜底",
       "model": "Mify-Google/gemini-3.1-pro-preview",
       "fallback_models": [
         "Mify-Anthropic/ppio/pa/claude-sonnet-4-6"
       ]
     },
     "quick": {
-      "_comment": "场景：单文件改动、typo fix、简单 config 修改。轻量快速，不浪费 opus",
+      "_comment": "通用轻量任务、单文件改动、typo fix、简单 config 修改；轻量快速，不占用 Opus",
       "model": "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
       "fallback_models": [
         "Mify-OpenAI/azure_openai/gpt-5-nano",
@@ -40,7 +40,7 @@
       ]
     },
     "writing": {
-      "_comment": "场景：飞书文档、调研报告、中文技术写作。sonnet 中文表达好，百炼 qwen 中文兜底",
+      "_comment": "通用中文技术写作、文档、报告；Sonnet 主力，GLM/Kimi 兜底",
       "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
       "fallback_models": [
         "Mify-Zhipu/zhipuai/glm-5",
@@ -48,7 +48,7 @@
       ]
     },
     "unspecified-high": {
-      "_comment": "场景：分类不明的高难度任务（兜底强模型）。sonnet 为主力，opus 备用",
+      "_comment": "通用分类不明的高难度任务；Sonnet 主力，Opus/GPT 备用",
       "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
       "fallback_models": [
         "Mify-Anthropic/ppio/pa/claude-opus-4-8",
@@ -58,7 +58,7 @@
       ]
     },
     "unspecified-low": {
-      "_comment": "场景：分类不明的低难度任务（轻量兜底）。haiku 快速，qwen 备用",
+      "_comment": "通用分类不明的低难度任务；Haiku 快速，DeepSeek/GPT nano 备用",
       "model": "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
       "fallback_models": [
         "Mify-Xiaomi/xiaomi/deepseek-v3.1",
