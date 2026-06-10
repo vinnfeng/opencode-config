@@ -103,9 +103,9 @@
       },
       "models": {
         "ppio/pa/gpt-5.5": {
-          "name": "PPIO GPT-5.5 (cost-reduction primary)",
+          "name": "GPT-5.5 (PPIO PA, cost-optimized)",
           "limit": {
-            "context": 200000,
+            "context": 270000,
             "output": 65536
           }
         },
