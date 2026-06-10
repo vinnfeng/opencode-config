@@ -102,6 +102,13 @@
         "apiKey": "PROVIDER_API_KEY"
       },
       "models": {
+        "ppio/pa/gpt-5.5": {
+          "name": "PPIO GPT-5.5 (cost-reduction primary)",
+          "limit": {
+            "context": 200000,
+            "output": 65536
+          }
+        },
         "azure_openai/gpt-5.5": {
           "name": "GPT-5.5",
           "limit": {
