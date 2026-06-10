@@ -33,24 +33,27 @@
     },
     "quick": {
       "_comment": "通用轻量任务、单文件改动、typo fix、简单 config 修改；轻量快速，不占用 Opus",
-      "model": "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
+      "model": "Mify-Xiaomi/xiaomi/mimo-v2-flash",
       "fallback_models": [
+        "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
         "Mify-OpenAI/azure_openai/gpt-5-nano",
         "Mify-Anthropic/ppio/pa/claude-haiku-4-5"
       ]
     },
     "writing": {
       "_comment": "通用中文技术写作、文档、报告；Sonnet 主力，GLM/Kimi 兜底",
-      "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
+      "model": "Mify-OpenAI/ppio/pa/gpt-5.5",
       "fallback_models": [
+        "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
         "Mify-Zhipu/zhipuai/glm-5",
         "Mify-Kimi/tongyi/kimi-k2.5"
       ]
     },
     "unspecified-high": {
       "_comment": "通用分类不明的高难度任务；Sonnet 主力，Opus/GPT 备用",
-      "model": "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
+      "model": "Mify-OpenAI/ppio/pa/gpt-5.5",
       "fallback_models": [
+        "Mify-Anthropic/ppio/pa/claude-sonnet-4-6",
         "Mify-Anthropic/ppio/pa/claude-opus-4-8",
         "Mify-Anthropic/ppio/pa/claude-opus-4-7",
         "Mify-OpenAI/azure_openai/gpt-5.5",
@@ -59,8 +62,9 @@
     },
     "unspecified-low": {
       "_comment": "通用分类不明的低难度任务；Haiku 快速，DeepSeek/GPT nano 备用",
-      "model": "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
+      "model": "Mify-Xiaomi/xiaomi/mimo-v2-flash",
       "fallback_models": [
+        "Mify-Anthropic/ppio/pa/claude-haiku-4-5-20251001",
         "Mify-Xiaomi/xiaomi/deepseek-v3.1",
         "Mify-OpenAI/azure_openai/gpt-5-nano"
       ]
