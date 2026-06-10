@@ -98,7 +98,7 @@
       "npm": "@ai-sdk/openai",
       "name": "Mify-OpenAI",
       "options": {
-        "baseURL": "PROVIDER_URL/v1/",
+        "baseURL": "https://api.llm.mioffice.cn/v1/",
         "apiKey": "PROVIDER_API_KEY"
       },
       "models": {
